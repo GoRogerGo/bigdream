@@ -2,6 +2,7 @@
 logs
 out
 *.iml
+*.png
 .project
 .classpath
 .settings
