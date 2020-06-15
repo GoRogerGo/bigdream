@@ -27,7 +27,7 @@
 
 package com.roger.bigdream.leetcode.editor.en;
 
-public class MedianOfTwoSortedArrays {
+class MedianOfTwoSortedArrays {
     public static void main(String[] args) {
         Solution solution = new MedianOfTwoSortedArrays().new Solution();
     }
