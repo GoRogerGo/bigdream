@@ -48,6 +48,13 @@ class LetterCombinationsOfAPhoneNumber {
 
         List<String> output = new ArrayList<String>();
 
+        /**
+         * Runtime:1 ms, faster than 82.21% of Java online submissions.
+         * Memory Usage:38.5 MB, less than 66.37% of Java online submissions.
+         *
+         * @param digits
+         * @return
+         */
         public List<String> letterCombinations(String digits) {
             if (digits.length() != 0) {
                 backtrack("", digits);
