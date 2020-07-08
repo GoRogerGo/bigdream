@@ -23,7 +23,7 @@ package com.roger.bigdream.leetcode.editor.en;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateParentheses {
+class GenerateParentheses {
     public static void main(String[] args) {
         Solution solution = new GenerateParentheses().new Solution();
     }

@@ -33,14 +33,10 @@ class MergeTwoSortedLists {
      */
     class Solution {
 
-        ListNode tail = new ListNode(0);
-        ListNode dummyHead = tail;
+        ListNode dummyHead = new ListNode(0);
+        ListNode tail = dummyHead;
 
         public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-            return myApproach(l1, l2);
-        }
-
-        private ListNode myApproach(ListNode l1, ListNode l2) {
             if (null == l1 && null == l2) return null;
             ListNode remainder = mergeTwoLists0(l1, l2);
             tail.next = remainder;
@@ -48,8 +44,8 @@ class MergeTwoSortedLists {
         }
 
         /**
-         * Runtime:1 ms, faster than 26.32% of Java online submissions.
-         * Memory Usage:40.1 MB, less than 14.01% of Java online submissions.
+         * Runtime:2 ms, faster than 27.38% of Java online submissions.
+         * Memory Usage:40.2 MB, less than 12.79% of Java online submissions.
          *
          * @param l1
          * @param l2
@@ -89,6 +85,51 @@ class MergeTwoSortedLists {
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
+        }
+    }
+
+    /**
+     * Runtime:1 ms, faster than 27.38% of Java online submissions.
+     * Memory Usage:40.1 MB, less than 14.67% of Java online submissions.
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    private ListNode iteratorWay(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode tail = dummyHead;
+        while (null != l1 && null != l2) {
+            if (l1.val <= l2.val) {
+                tail.next = l1;
+                l1 = l1.next;
+            } else {
+                tail.next = l2;
+                l2 = l2.next;
+            }
+            tail = tail.next;
+        }
+        if (null != l1) tail.next = l1;
+        if (null != l2) tail.next = l2;
+        return dummyHead.next;
+    }
+
+    /**
+     * Runtime:1 ms, faster than 27.38% of Java online submissions.
+     * Memory Usage:40.1 MB, less than 15.62% of Java online submissions.
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    private ListNode recursiveWay(ListNode l1, ListNode l2) {
+        if (null == l1 || null == l2) return null == l1 ? l2 : l1;
+        if (l1.val <= l2.val) {
+            l1.next = recursiveWay(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = recursiveWay(l1, l2.next);
+            return l2;
         }
     }
 }
