@@ -60,22 +60,28 @@ class ReverseNodesInKGroup {
 
         public ListNode reverseKGroup(ListNode head, int k) {
             ListNode dummyHead = new ListNode(0, head);
+            // 1-1. pre和start已归置好
             ListNode pre = dummyHead, start = head, end = head, next = head;
             while (null != next) {
-                // 根据k找到end，注意链表是否结束
+                // 1-2. 归置end：根据k找到end，注意链表是否结束
                 for (int i = 1; i < k && null != end; i++) {
                     end = end.next;
                 }
-                // 如果链表的尾部被k整除，跳出while循环
-                if (null == end) break;
-                // 对翻转区进行翻转
+                if (null == end) break;// 如果链表的尾部被k整除，跳出while循环
+                // 1-3. 归置next
                 next = end.next;
+
+                // 2.断开next，得到小链表
                 end.next = null;
+
+                // 3-1.反转小链表
                 end = start;
                 start = reverse(start);
+                // 3-2.将反转后的小链表和原链表连接起来
                 end.next = next;
                 pre.next = start;
-                // 重新指定pre，start，end
+
+                // 重新指定pre，start，end。下一次循环就又从归置end开始了。
                 pre = end;
                 start = next;
                 end = start;
@@ -87,7 +93,9 @@ class ReverseNodesInKGroup {
         private ListNode reverse(ListNode head) {
             ListNode pre = null, curr = head, next = null;
             while (null != curr) {
+                // 1,3,4行的操作就是将pre,curr,next向后传
                 next = curr.next;
+                // 2行的操作就是将当前元素指向前一个指针
                 curr.next = pre;
                 pre = curr;
                 curr = next;
