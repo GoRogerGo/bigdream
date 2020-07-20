@@ -46,63 +46,116 @@ class SubstringWithConcatenationOfAllWords {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        public List<Integer> findSubstring(String s, String[] words) {
-            // TODO 做完46，47题后，回来再按全排列的思路做一遍
-            return myApproach(s, words);
-        }
-
         /**
-         * Runtime:234 ms, faster than 26.70% of Java online submissions.
-         * Memory Usage:39.9 MB, less than 78.32% of Java online submissions.
+         * 按全排列的思路做一遍
+         *
+         * Wrong Answer:
+         * input:"foobarfoobar"
+         * ["foo","bar"]
+         * Output:[0,3]
+         * Expected:[0,3,6]
          *
          * @param s
          * @param words
          * @return
          */
-        private List<Integer> myApproach(String s, String[] words) {
+        public List<Integer> findSubstring(String s, String[] words) {
             List<Integer> res = new ArrayList<>();
-            if ("".equals(s) || words.length == 0) return res;
 
-            int length = s.length();
-            int unitSize = words[0].length();
-            int searchLength = length - words.length * unitSize + 1;
+            List<String> ansSpace = new ArrayList<>();
+            List<String> ans = new ArrayList<>(words.length);
+            for (int i = 0; i < words.length; i++) {
+                ans.add("");
+            }
+            List<Boolean> used = new ArrayList<>(words.length);
+            for (int i = 0; i < words.length; i++) {
+                used.add(false);
+            }
 
-            Map<String, Integer> map = new HashMap<>();
-            initMap(words, map);
+            dfs(0, ansSpace, words, ans, used);
 
-            for (int i = 0; i < searchLength; i++) {
-                // s包含的字符串必须是words里的
-                for (int j = 0; j < words.length; j++) {
-                    int index = i + j * unitSize;
-                    String s0 = s.substring(index, index + unitSize);
-                    Integer hitCount = map.get(s0);
-                    if (null == hitCount) break;
-                    map.put(s0, hitCount - 1);
+            for (String ans0 : ansSpace) {
+                if (s.indexOf(ans0) >= 0) {
+                    res.add(s.indexOf(ans0));
                 }
-                if (hitAllWords(map)) {
-                    res.add(i);
-                }
-                map = new HashMap<>();
-                initMap(words, map);
             }
             return res;
         }
 
-        private boolean hitAllWords(Map<String, Integer> map) {
-            return map.values().stream().allMatch(entry -> entry.compareTo(0) == 0);
-        }
-
-        private void initMap(String[] words, Map<String, Integer> map) {
-            for (String word : words) {
-                Integer count = map.get(word);
-                if (null == count) {
-                    map.put(word, 1);
-                } else {
-                    map.put(word, count + 1);
+        private void dfs(int curPos, List<String> ansSpace, String[] words, List<String> ans, List<Boolean> used) {
+            if (curPos == words.length) {
+                String an = "";
+                for (String a : ans) {
+                    an += a;
+                }
+                if (!ansSpace.contains(an)) {
+                    ansSpace.add(an);
+                }
+                return;
+            }
+            for (int i = 0; i < words.length; i++) {
+                if (!used.get(i)) {
+                    used.set(i, true);
+                    ans.set(curPos, words[i]);
+                    dfs(curPos + 1, ansSpace, words, ans, used);
+                    used.set(i, false);
                 }
             }
         }
+
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
+    /**
+     * Runtime:234 ms, faster than 26.70% of Java online submissions.
+     * Memory Usage:39.9 MB, less than 78.32% of Java online submissions.
+     *
+     * @param s
+     * @param words
+     * @return
+     */
+    private List<Integer> myApproach(String s, String[] words) {
+        List<Integer> res = new ArrayList<>();
+        if ("".equals(s) || words.length == 0) return res;
+
+        int length = s.length();
+        int unitSize = words[0].length();
+        int searchLength = length - words.length * unitSize + 1;
+
+        Map<String, Integer> map = new HashMap<>();
+        initMap(words, map);
+
+        for (int i = 0; i < searchLength; i++) {
+            // s包含的字符串必须是words里的
+            for (int j = 0; j < words.length; j++) {
+                int index = i + j * unitSize;
+                String s0 = s.substring(index, index + unitSize);
+                Integer hitCount = map.get(s0);
+                if (null == hitCount) break;
+                map.put(s0, hitCount - 1);
+            }
+            if (hitAllWords(map)) {
+                res.add(i);
+            }
+            map = new HashMap<>();
+            initMap(words, map);
+        }
+        return res;
+    }
+
+    private boolean hitAllWords(Map<String, Integer> map) {
+        return map.values().stream().allMatch(entry -> entry.compareTo(0) == 0);
+    }
+
+    private void initMap(String[] words, Map<String, Integer> map) {
+        for (String word : words) {
+            Integer count = map.get(word);
+            if (null == count) {
+                map.put(word, 1);
+            } else {
+                map.put(word, count + 1);
+            }
+        }
+    }
 }
