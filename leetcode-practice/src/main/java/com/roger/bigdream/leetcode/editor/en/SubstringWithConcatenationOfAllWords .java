@@ -47,6 +47,7 @@ class SubstringWithConcatenationOfAllWords {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public List<Integer> findSubstring(String s, String[] words) {
+            // TODO 做完46，47题后，回来再按全排列的思路做一遍
             return myApproach(s, words);
         }
 
