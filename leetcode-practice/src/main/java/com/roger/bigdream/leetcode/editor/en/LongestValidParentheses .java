@@ -22,6 +22,7 @@
 
 package com.roger.bigdream.leetcode.editor.en;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 class LongestValidParentheses {
@@ -40,51 +41,82 @@ class LongestValidParentheses {
     class Solution {
 
         /**
-         * 记忆搜索法
-         * 1.建立一个数组dp[i]，表示以s[i]结尾的有效括号子串的长度。
-         * 2.从头开始遍历，如果当前字符是右括号，则从当前位置前一个位置开始寻找没有被匹配过的左括号，
-         * 得到dp数组后，遍历求出连续有效括号子串的最大长度。
+         * 动态规划方法 https://www.bilibili.com/video/BV1Ct4y197M3
+         * <p>
+         * dp[i-1] dp[i]
+         * ()(())
+         * 对应的左括号下标 i-dp[i-1]-1
+         * 前一个右括号下标，最关键 i-dp[i-1]-2
+         * dp[i]=2+dp[i-1]+dp[i-dp[i-1]-2]
          * <p>
          * Runtime:1 ms, faster than 100.00% of Java online submissions.
-         * Memory Usage:39.2 MB, less than 69.69% of Java online submissions.
+         * Memory Usage:39.2 MB, less than 64.43% of Java online submissions.
          *
          * @param s
          * @return
          */
         public int longestValidParentheses(String s) {
             int[] dp = new int[s.length()];
-            int res = 0;
-            for (int i = 0; i < dp.length; i++) {
-                if (s.charAt(i) != ')') {
-                    continue;
-                }
-                int j = i - 1;
-                while (j >= 0) {
-                    if (s.charAt(j) == '(') {
-                        dp[i] = i - j + 1;
-                        break;
+            Arrays.fill(dp, 0);
+            int max = 0;
+            for (int i = 1; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if (c == ')') {
+                    if (i - dp[i - 1] > 0 && s.charAt(i - dp[i - 1] - 1) == '(') {
+                        dp[i] = 2 + dp[i - 1] + (i - dp[i - 1] - 2 > -1 ? dp[i - dp[i - 1] - 2] : 0);
                     }
-                    if (dp[j] == 0) {
-                        break;
-                    }
-                    j -= dp[j];
                 }
+                max = Math.max(max, dp[i]);
             }
-            int sum = 0;
-            for (int i = dp.length - 1; i >= 0; ) {
-                if (dp[i] > 0) {
-                    sum += dp[i];
-                    i -= dp[i];
-                } else {
-                    i--;
-                    sum = 0;
-                }
-                res = Math.max(res, sum);
-            }
-            return res;
+            return max;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
+
+    /**
+     * 记忆搜索法
+     * 1.建立一个数组dp[i]，表示以s[i]结尾的有效括号子串的长度。
+     * 2.从头开始遍历，如果当前字符是右括号，则从当前位置前一个位置开始寻找没有被匹配过的左括号，
+     * 得到dp数组后，遍历求出连续有效括号子串的最大长度。
+     * <p>
+     * Runtime:1 ms, faster than 100.00% of Java online submissions.
+     * Memory Usage:39.2 MB, less than 69.69% of Java online submissions.
+     *
+     * @param s
+     * @return
+     */
+    public int memorySearch(String s) {
+        int[] dp = new int[s.length()];
+        int res = 0;
+        for (int i = 0; i < dp.length; i++) {
+            if (s.charAt(i) == '(') {
+                continue;
+            }
+            int j = i - 1;
+            while (j >= 0) {
+                if (s.charAt(j) == '(') {
+                    dp[i] = i - j + 1;
+                    break;
+                }
+                if (dp[j] == 0) {
+                    break;
+                }
+                j -= dp[j];
+            }
+        }
+        int sum = 0;
+        for (int i = dp.length - 1; i >= 0; ) {
+            if (dp[i] > 0) {
+                sum += dp[i];
+                i -= dp[i];
+            } else {
+                i--;
+                sum = 0;
+            }
+            res = Math.max(res, sum);
+        }
+        return res;
+    }
 
     /**
      * 向stack中注入下标
