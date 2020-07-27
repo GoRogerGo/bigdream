@@ -63,7 +63,6 @@ class SearchInRotatedSortedArray {
         private int findTarget(int[] nums, int target, int low, int high) {
             while (low <= high) {
                 int mid = (low + high) / 2;
-                if (nums[low] > target || nums[high] < target) return -1;
                 if (nums[mid] == target) {
                     return mid;
                 } else if (nums[mid] > target) {
