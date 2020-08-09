@@ -50,6 +50,8 @@
 
 package com.roger.bigdream.leetcode.editor.en;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class CombinationSum {
@@ -60,10 +62,61 @@ class CombinationSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public List<List<Integer>> combinationSum(int[] candidates, int target) {
+            return withOutputOrder(candidates, target);
+        }
 
-            return null;
+        /**
+         * Runtime:4 ms, faster than 67.65% of Java online submissions.
+         * Memory Usage:39.6 MB, less than 84.39% of Java online submissions.
+         *
+         * @param candidates
+         * @param target
+         * @return
+         */
+        private List<List<Integer>> withOutputOrder(int[] candidates, int target) {
+            List<List<Integer>> res = new ArrayList<>();
+            List<Integer> curr = new ArrayList<>();
+            Arrays.sort(candidates);
+            for (int n = 1; n <= target / candidates[0]; n++) {
+                combinationSum1(candidates, target, 0, 0, n, curr, res);
+            }
+            return res;
+        }
+
+        private void combinationSum1(int[] candidates, int target, int start, int depth, int n, List<Integer> curr, List<List<Integer>> res) {
+            if (depth == n && target == 0) {
+                res.add(new ArrayList<>(curr));
+                return;
+            }
+            for (int i = start; i < candidates.length; i++) {
+                if (candidates[i] > target) break;
+                curr.add(candidates[i]);
+                combinationSum1(candidates, target - candidates[i], i, depth + 1, n, curr, res);
+                curr.remove(curr.size() - 1);
+            }
         }
     }
-//leetcode submit region end(Prohibit modification and deletion)
 
+    //leetcode submit region end(Prohibit modification and deletion)
+    private List<List<Integer>> withoutOutputOrder(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> curr = new ArrayList<>();
+        Arrays.sort(candidates);
+        combinationSum0(candidates, target, 0, curr, res);
+        return res;
+    }
+
+    private void combinationSum0(int[] candidates, int target, int start, List<Integer> curr, List<List<Integer>> res) {
+        if (target == 0) {
+            res.add(new ArrayList<>(curr));
+            return;
+        }
+        for (int i = start; i < candidates.length; i++) {
+            if (candidates[i] > target) break;
+            curr.add(candidates[i]);
+            combinationSum0(candidates, target - candidates[i], i, curr, res);
+            curr.remove(curr.size() - 1);
+        }
+
+    }
 }
