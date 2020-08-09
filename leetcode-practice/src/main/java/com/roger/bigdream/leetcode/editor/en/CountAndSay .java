@@ -50,46 +50,77 @@ package com.roger.bigdream.leetcode.editor.en;
 class CountAndSay {
     public static void main(String[] args) {
         Solution solution = new CountAndSay().new Solution();
-        solution.countAndSay(6);
+        System.out.println(solution.countAndSay(6));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String countAndSay(int n) {
-            String[] solve = new String[30];
-            fill(solve, 0, n);
-            return solve[n - 1];
-        }
+            if (n == 0) return "";
+            if (n == 1) return "1";
+            String[] dp = new String[n];
+            dp[0] = "1";
+            dp[1] = "11";
 
-        /**
-         * Runtime:32 ms, faster than 7.52% of Java online submissions.
-         * Memory Usage:51.7 MB, less than 5.03% of Java online submissions.
-         *
-         * @param solve
-         * @param i
-         * @param n
-         */
-        private void fill(String[] solve, int i, int n) {
-            if (i == n) return;
-
-            String cur = i == 0 ? "1" : "";
-            if (i > 0) {
-                String pre = solve[i - 1];
+            for (int i = 2; i < n; i++) {
+                String prev = dp[i - 1];
+                char[] chars = prev.toCharArray();
+                StringBuilder sb = new StringBuilder();
                 int count = 1;
-                for (int k = 0; k < pre.length(); k++) {
-                    if (k + 1 < pre.length() && pre.charAt(k) == pre.charAt(k + 1)) {
+                char curr = chars[0];
+
+                for (int j = 1; j < prev.length(); j++) {
+                    if (prev.charAt(j) != curr) {
+                        sb.append(count);
+                        sb.append(curr);
+                        curr = prev.charAt(j);
+                        count = 1;
+                    } else {
                         count++;
-                        continue;
                     }
-                    cur += count;
-                    cur += pre.charAt(k);
-                    count = 1;
                 }
+                sb.append(count);
+                sb.append(curr);
+                dp[i] = sb.toString();
             }
-            solve[i] = cur;
-            fill(solve, i + 1, n);
+
+            return dp[n - 1];
         }
     }
-//leetcode submit region end(Prohibit modification and deletion)
 
+    //leetcode submit region end(Prohibit modification and deletion)
+    private String myApproach(int n) {
+        String[] solve = new String[30];
+        fill(solve, 0, n);
+        return solve[n - 1];
+    }
+
+    /**
+     * Runtime:32 ms, faster than 7.52% of Java online submissions.
+     * Memory Usage:51.7 MB, less than 5.03% of Java online submissions.
+     *
+     * @param solve
+     * @param i
+     * @param n
+     */
+    private void fill(String[] solve, int i, int n) {
+        if (i == n) return;
+
+        String cur = i == 0 ? "1" : "";
+        if (i > 0) {
+            String pre = solve[i - 1];
+            int count = 1;
+            for (int k = 0; k < pre.length(); k++) {
+                if (k + 1 < pre.length() && pre.charAt(k) == pre.charAt(k + 1)) {
+                    count++;
+                    continue;
+                }
+                cur += count;
+                cur += pre.charAt(k);
+                count = 1;
+            }
+        }
+        solve[i] = cur;
+        fill(solve, i + 1, n);
+    }
 }
