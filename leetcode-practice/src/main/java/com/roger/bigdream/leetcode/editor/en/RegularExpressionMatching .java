@@ -84,6 +84,7 @@ class RegularExpressionMatching {
         }
 
         /**
+         * 动态规划比递归要快，动态规划直接从底向上，递归要先下后上
          * Runtime:2 ms, faster than 92.98% of Java online submissions.
          * Memory Usage:38.5 MB, less than 61.14% of Java online submissions.
          *
@@ -98,7 +99,7 @@ class RegularExpressionMatching {
             dp[s.length()][p.length()] = true;// 相当于递归的结束条件
             for (int i = s.length(); i >= 0; i--) {
                 for (int j = p.length(); j >= 0; j--) {
-                    if (i == s.length() && j == p.length()) continue;
+                    if (i == s.length() && j == p.length()) continue;// 已经初始化了
                     boolean isFirstMatch = (i < s.length() && j < p.length())
                             && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.');
                     if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
@@ -115,6 +116,7 @@ class RegularExpressionMatching {
 
     /**
      * 递归法
+     * s[i]==p[i] && p[i]=='.'
      * Runtime:69 ms, faster than 13.21% of Java online submissions.
      * Memory Usage:39.4 MB, less than 49.68% of Java online submissions.
      *
@@ -126,11 +128,12 @@ class RegularExpressionMatching {
         if (p.isEmpty()) {
             return s.isEmpty();
         }
-        // 检测到p中第i个元素的下一个元素为"*"时，有两种情况
-        // p的第i个元素在s中出现0次。此时，s不变，p剪去首部2个元素
-        // p的第i个元素在s中出现1次或多次。此时，比较i元素和s的首元素是否相同，如果相同则剪去s的首元素，保持p不变继续递归。
         boolean isFirstMatch = !s.isEmpty() && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.');
+        // 检测到p中第i个元素的下一个元素为"*"时，有两种情况
         if (p.length() >= 2 && p.charAt(1) == '*') {
+            // 第一种情况：p的第i个元素在s中出现0次。此时，s不变，p剪去首部2个元素
+            // 第二种情况：p的第i个元素在s中出现1次或多次。此时，比较i元素和s的首元素是否相同，如果相同则剪去s的首元素，保持p不变继续递归。
+            // 或关系，将两种情况都试一次
             return recursive(s, p.substring(2)) || isFirstMatch && recursive(s.substring(1), p);
         } else {
             return isFirstMatch && recursive(s.substring(1), p.substring(1));
