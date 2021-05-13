@@ -60,16 +60,16 @@ public class ReverseLinkedList {
      */
     class Solution {
         public ListNode reverseList(ListNode head) {
-            if (head == null || head.next == null) return head;
-
-            ListNode reverseHead = null;
-            while (head != null) {
-                ListNode second = head.next;
-                head.next = reverseHead;
-                reverseHead = head;
-                head = second;
+            // prev curr temp，一步步向前挪
+            ListNode prev = null;
+            ListNode curr = head;
+            while (curr != null) {
+                ListNode temp = curr.next;
+                curr.next = prev; // 当前元素指向前一个元素
+                prev = curr; //向前挪
+                curr = temp; //向前挪
             }
-            return reverseHead;
+            return prev;
         }
     }
 
