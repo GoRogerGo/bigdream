@@ -39,18 +39,35 @@ package com.roger.bigdream.leetcode.editor.en;
 // 👍 5389 👎 310
 
 
-public class SortColors{
-	public static void main(String[] args) {
-		Solution solution = new SortColors().new Solution();
-		
-	}
-	
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public void sortColors(int[] nums) {
-        
+public class SortColors {
+    public static void main(String[] args) {
+        Solution solution = new SortColors().new Solution();
+        solution.sortColors(new int[]{2, 0, 2, 1, 1, 0});
     }
-}
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        /**
+         * Runtime:0 ms, faster than 100.00% of Java online submissions.
+         *
+         * @param nums
+         */
+        public void sortColors(int[] nums) {
+            if (nums.length <= 1) return;
+            // 查找数组中数据的范围(该步省略，直接定为3)
+            int[] c = new int[3]; // 申请一个计数数组c，下标大小[0,max]
+            for (int num : nums) {
+                c[num]++;
+            }
+            int k = 0;
+            for (int i = 0; i < 3; i++) {
+                int j = 0;
+                while (j++ < c[i]) {
+                    nums[k++] = i;
+                }
+            }
+        }
+    }
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
