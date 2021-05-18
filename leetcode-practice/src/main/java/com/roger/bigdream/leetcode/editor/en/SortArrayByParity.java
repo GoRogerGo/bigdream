@@ -29,18 +29,37 @@ package com.roger.bigdream.leetcode.editor.en;
 // 👍 1726 👎 91
 
 
-public class SortArrayByParity{
-	public static void main(String[] args) {
-		Solution solution = new SortArrayByParity().new Solution();
-		
-	}
-	
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int[] sortArrayByParity(int[] nums) {
-        
+public class SortArrayByParity {
+    public static void main(String[] args) {
+        Solution solution = new SortArrayByParity().new Solution();
+        solution.sortArrayByParity(new int[]{3, 1, 2, 4});
     }
-}
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        /**
+         * Runtime:1 ms, faster than 98.40% of Java online submissions.
+         *
+         * @param nums
+         * @return
+         */
+        public int[] sortArrayByParity(int[] nums) {
+            int[] odd = new int[nums.length];
+            int[] even = new int[nums.length];
+            int oddCtn = 0, evenCtn = 0;
+            for (int num : nums) {
+                if (num % 2 == 0) {
+                    even[evenCtn++] = num;
+                } else {
+                    odd[oddCtn++] = num;
+                }
+            }
+            for (int i = 0; i < oddCtn; i++) {
+                even[evenCtn + i] = odd[i];
+            }
+            return even;
+        }
+    }
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
