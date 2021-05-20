@@ -27,3 +27,5 @@ target
 .sass-cache
 src/main/webapp/static/css/**/*.css*
 ${sys:app.logdir}
+leetcode-practice/src/main/java/com/roger/bigdream/leetcode/editor/en/all.json
+
