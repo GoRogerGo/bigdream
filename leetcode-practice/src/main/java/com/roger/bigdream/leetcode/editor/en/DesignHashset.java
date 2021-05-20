@@ -45,34 +45,111 @@ package com.roger.bigdream.leetcode.editor.en;
 // 👍 726 👎 108
 
 
-public class DesignHashset{
-	public static void main(String[] args) {
-		Solution solution = new DesignHashset().new Solution();
-		
-	}
-	
-//leetcode submit region begin(Prohibit modification and deletion)
-class MyHashSet {
+public class DesignHashset {
+    public static void main(String[] args) {
+//		Solution solution = new DesignHashset().new Solution();
 
-    /** Initialize your data structure here. */
-    public MyHashSet() {
-        
     }
-    
-    public void add(int key) {
-        
-    }
-    
-    public void remove(int key) {
-        
-    }
-    
-    /** Returns true if this set contains the specified element */
-    public boolean contains(int key) {
-        
-    }
-}
 
+    //leetcode submit region begin(Prohibit modification and deletion)
+
+    /**
+     * Runtime:13 ms, faster than 67.09% of Java online submissions.
+     */
+    class MyHashSet {
+        ListNode[] arrays;
+
+        /**
+         * Initialize your data structure here.
+         */
+        public MyHashSet() {
+            arrays = new ListNode[1009];
+        }
+
+        public void add(int key) {
+            int index = hash(key);
+            ListNode head = arrays[index];
+            if (head == null) {
+                arrays[index] = new ListNode(key, null, null);
+            } else {
+                ListNode node = head;
+                boolean found = false;
+                while (node != null) {
+                    if (node.key == key) {
+                        found = true;
+                        break;
+                    }
+                    node = node.next;
+                }
+                if (!found) {
+                    ListNode newNode = new ListNode(key, head, null);
+                    arrays[index] = newNode;
+                    head.prev = newNode;
+                }
+            }
+        }
+
+        public void remove(int key) {
+            int index = hash(key);
+            ListNode node = arrays[index];
+            while (node != null) {
+                if (node.key == key) {
+                    if (node.prev == null && node.next == null) {
+                        //头结点删除且没有后继元素
+                        arrays[index] = null;
+                    } else if (node.prev != null && node.next == null) {
+                        //尾结点删除
+                        node.prev.next = null;
+                    } else if (node.prev == null && node.next != null) {
+                        //头结点删除且有后继元素
+                        arrays[index] = node.next;
+                        node.next.prev = null;
+                    } else {
+                        //中间结点删除
+                        ListNode preNode = node.prev;
+                        node.next.prev = node.prev;
+                        preNode.next = node.next;
+                    }
+                    return;
+                }
+                node = node.next;
+            }
+        }
+
+        /**
+         * Returns true if this set contains the specified element
+         */
+        public boolean contains(int key) {
+            int index = hash(key);
+            ListNode node = arrays[index];
+            while (node != null) {
+                if (node.key == key) {
+                    return true;
+                }
+                node = node.next;
+            }
+            return false;
+        }
+
+        private int hash(int key) {
+            return key % 1009;
+        }
+    }
+
+    class ListNode {
+        int key;
+        ListNode next;
+        ListNode prev;
+
+        public ListNode() {
+        }
+
+        public ListNode(int key, ListNode next, ListNode prev) {
+            this.key = key;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
 /**
  * Your MyHashSet object will be instantiated and called as such:
  * MyHashSet obj = new MyHashSet();
