@@ -42,43 +42,75 @@ package com.roger.bigdream.leetcode.editor.en;
 // 👍 3127 👎 146
 
 
-public class ReorderList{
-	public static void main(String[] args) {
-		Solution solution = new ReorderList().new Solution();
-		
-	}
-	
-//leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
-class Solution {
-    public void reorderList(ListNode head) {
-        
+public class ReorderList {
+    public static void main(String[] args) {
+        Solution solution = new ReorderList().new Solution();
+        solution.reorderList(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
+//        solution.reorderList(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))));
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
-public static class ListNode {
-	int val;
-	ListNode next;
 
-	ListNode() {
-	}
+//leetcode submit region begin(Prohibit modification and deletion)
 
-	ListNode(int val) {
-		this.val = val;
-	}
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     * int val;
+     * ListNode next;
+     * ListNode() {}
+     * ListNode(int val) { this.val = val; }
+     * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     * }
+     */
+    class Solution {
+        /**
+         * Runtime:1 ms, faster than 99.80% of Java online submissions.
+         *
+         * @param head
+         */
+        public void reorderList(ListNode head) {
+            ListNode fast = head, slow = head;
+            while (fast.next != null && fast.next.next != null) {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
 
-	ListNode(int val, ListNode next) {
-		this.val = val;
-		this.next = next;
-	}
-}
+            ListNode first = slow.next;
+            ListNode reverseHead = null;
+            while (first != null) {
+                ListNode second = first.next;
+                first.next = reverseHead;
+                reverseHead = first;
+                first = second;
+            }
+            slow.next = null;
+
+            ListNode node = head;
+            while (reverseHead != null) {
+                ListNode front = node.next;
+                ListNode end = reverseHead.next;
+                node.next = reverseHead;
+                reverseHead.next = front;
+                node = front;
+                reverseHead = end;
+            }
+        }
+    }
+
+    //leetcode submit region end(Prohibit modification and deletion)
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
 }
