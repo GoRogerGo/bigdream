@@ -62,7 +62,7 @@ class CombinationSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public List<List<Integer>> combinationSum(int[] candidates, int target) {
-            return withOutputOrder(candidates, target);
+            return withoutOutputOrder(candidates, target);
         }
 
         /**
@@ -77,6 +77,7 @@ class CombinationSum {
             List<List<Integer>> res = new ArrayList<>();
             List<Integer> curr = new ArrayList<>();
             Arrays.sort(candidates);
+            // n是解的长度
             for (int n = 1; n <= target / candidates[0]; n++) {
                 combinationSum1(candidates, target, 0, 0, n, curr, res);
             }
@@ -84,6 +85,7 @@ class CombinationSum {
         }
 
         private void combinationSum1(int[] candidates, int target, int start, int depth, int n, List<Integer> curr, List<List<Integer>> res) {
+            // depth是递归深度，等于长度，只能使用n个元素
             if (depth == n && target == 0) {
                 res.add(new ArrayList<>(curr));
                 return;
@@ -95,28 +97,37 @@ class CombinationSum {
                 curr.remove(curr.size() - 1);
             }
         }
-    }
 
+        /**
+         * Success: Runtime:2 ms, faster than 98.36% of Java online submissions.
+         *
+         * @param candidates
+         * @param target
+         * @return
+         */
+        private List<List<Integer>> withoutOutputOrder(int[] candidates, int target) {
+            List<List<Integer>> res = new ArrayList<>();
+            List<Integer> curr = new ArrayList<>();
+            Arrays.sort(candidates);
+            combinationSum0(candidates, target, 0, curr, res);
+            return res;
+        }
+
+        private void combinationSum0(int[] candidates, int target, int start, List<Integer> curr, List<List<Integer>> res) {
+            if (target == 0) {
+                res.add(new ArrayList<>(curr));
+                return;
+            }
+            for (int i = start; i < candidates.length; i++) {
+                if (candidates[i] > target) break;
+                curr.add(candidates[i]);
+                // 和40题的差别在于start参数，这里是i，那里是i+1
+                combinationSum0(candidates, target - candidates[i], i, curr, res);
+                curr.remove(curr.size() - 1);
+            }
+
+        }
+    }
     //leetcode submit region end(Prohibit modification and deletion)
-    private List<List<Integer>> withoutOutputOrder(int[] candidates, int target) {
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> curr = new ArrayList<>();
-        Arrays.sort(candidates);
-        combinationSum0(candidates, target, 0, curr, res);
-        return res;
-    }
 
-    private void combinationSum0(int[] candidates, int target, int start, List<Integer> curr, List<List<Integer>> res) {
-        if (target == 0) {
-            res.add(new ArrayList<>(curr));
-            return;
-        }
-        for (int i = start; i < candidates.length; i++) {
-            if (candidates[i] > target) break;
-            curr.add(candidates[i]);
-            combinationSum0(candidates, target - candidates[i], i, curr, res);
-            curr.remove(curr.size() - 1);
-        }
-
-    }
 }

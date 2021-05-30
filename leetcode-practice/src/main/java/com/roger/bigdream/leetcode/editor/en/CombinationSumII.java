@@ -44,9 +44,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class CombinationSumIi {
+class CombinationSumII {
     public static void main(String[] args) {
-        Solution solution = new CombinationSumIi().new Solution();
+        Solution solution = new CombinationSumII().new Solution();
         solution.combinationSum2(new int[]{10, 1, 2, 7, 6, 1, 5}, 8);
     }
 
@@ -63,13 +63,12 @@ class CombinationSumIi {
         public List<List<Integer>> combinationSum2(int[] candidates, int target) {
             List<List<Integer>> res = new ArrayList<>();
             List<Integer> curr = new ArrayList<>();
-            int[] used = new int[candidates.length];
             Arrays.sort(candidates);
-            dfs(candidates, target, 0, used, curr, res);
+            dfs(candidates, target, 0, curr, res);
             return res;
         }
 
-        private void dfs(int[] candidates, int target, int start, int[] used, List<Integer> curr, List<List<Integer>> res) {
+        private void dfs(int[] candidates, int target, int start, List<Integer> curr, List<List<Integer>> res) {
             if (target == 0) {
                 res.add(new ArrayList<>(curr));
                 return;
@@ -78,7 +77,8 @@ class CombinationSumIi {
                 if (target < candidates[i]) return;
                 if (i > start && candidates[i] == candidates[i - 1]) continue;//相同元素在同一层里不能使用
                 curr.add(candidates[i]);
-                dfs(candidates, target - candidates[i], i + 1, used, curr, res);
+                // 和39题的差别在于start参数，这里是i+1，那里是i
+                dfs(candidates, target - candidates[i], i + 1, curr, res);
                 curr.remove(curr.size() - 1);
             }
         }
