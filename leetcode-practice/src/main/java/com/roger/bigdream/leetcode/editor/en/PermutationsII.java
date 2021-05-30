@@ -20,9 +20,9 @@ package com.roger.bigdream.leetcode.editor.en;
 
 import java.util.*;
 
-class PermutationsIi {
+class PermutationsII {
     public static void main(String[] args) {
-        Solution solution = new PermutationsIi().new Solution();
+        Solution solution = new PermutationsII().new Solution();
 //        solution.permuteUnique(new int[]{1, 2, 3});
         solution.permuteUnique(new int[]{1, 1, 2});
     }
@@ -51,6 +51,7 @@ class PermutationsIi {
             }
             for (int i = 0; i < nums.length; i++) {
                 if (visited[i]) continue;
+                // Same number can be only used once at each depth.
                 if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) continue;
                 cur.add(nums[i]);
                 visited[i] = true;
