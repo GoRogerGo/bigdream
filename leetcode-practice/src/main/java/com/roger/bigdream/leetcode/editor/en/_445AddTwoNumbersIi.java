@@ -76,6 +76,32 @@ public class _445AddTwoNumbersIi {
      */
     class Solution {
         /**
+         * 解答成功: 执行耗时:6 ms,击败了24.14% 的Java用户 内存消耗:42.5 MB,击败了51.35% 的Java用户
+         * from huahua
+         * 注意点：①相较于自己的写法，不需要再来一个stack做转换了，使用head一层层"脱"
+         *
+         * @param l1
+         * @param l2
+         * @return
+         */
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            if (l1 == null) return l2;
+            if (l2 == null) return l1;
+            Stack stack1 = parseFromListNode(l1);
+            Stack stack2 = parseFromListNode(l2);
+            int carry = 0;
+            ListNode head = null;
+            while (!stack1.empty() || !stack2.empty() || carry > 0) {
+                int val = (!stack1.empty() ? (int) stack1.pop() : 0) + (!stack2.empty() ? (int) stack2.pop() : 0) + carry;
+                carry = val < 10 ? 0 : 1;
+                ListNode node = new ListNode(val % 10);
+                node.next = head;
+                head = node;
+            }
+            return head;
+        }
+
+        /**
          * 解答成功:
          * 执行耗时:7 ms,击败了13.98% 的Java用户
          * 内存消耗:42.4 MB,击败了51.35% 的Java用户
@@ -86,7 +112,7 @@ public class _445AddTwoNumbersIi {
          * @param l2
          * @return
          */
-        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        public ListNode addTwoNumbers_byMyself(ListNode l1, ListNode l2) {
             if (l1 == null) return l2;
             if (l2 == null) return l1;
             Stack stack1 = parseFromListNode(l1);
