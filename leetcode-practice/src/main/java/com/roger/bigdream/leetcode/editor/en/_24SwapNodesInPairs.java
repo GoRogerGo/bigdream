@@ -56,6 +56,29 @@ public class _24SwapNodesInPairs {
      */
     class Solution {
         /**
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:40.6 MB,击败了20.10% 的Java用
+         * 第二次编写 还是不熟悉 2023年03月03日17:48:19
+         * 注意点：①head借助dummyHead前移一位 ②第一个元素和第二个元素交换不熟练
+         *
+         * @param head
+         * @return
+         */
+        public ListNode swapPairs(ListNode head) {
+            if (head == null || head.next == null) return head;
+            ListNode dummyHead = new ListNode(0, head);
+            head = dummyHead;
+            while (head.next != null && head.next.next != null) {
+                ListNode first = head.next;
+                ListNode second = head.next.next;
+                first.next = second.next;
+                second.next = first;
+                head.next = second;
+                head = first;
+            }
+            return dummyHead.next;
+        }
+
+        /**
          * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:40 MB,击败了61.22% 的Java用户
          * from huahua
          * 没思路，不会写
@@ -63,7 +86,7 @@ public class _24SwapNodesInPairs {
          * @param head
          * @return
          */
-        public ListNode swapPairs(ListNode head) {
+        public ListNode swapPairs_first(ListNode head) {
             if (head == null || head.next == null) return head;
             ListNode dummyHead = new ListNode(0, head);
             head = dummyHead;
