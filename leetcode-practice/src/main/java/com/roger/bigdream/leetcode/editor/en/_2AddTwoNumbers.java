@@ -73,6 +73,32 @@ public class _2AddTwoNumbers {
      */
     class Solution {
         /**
+         * 第二次编写 2023年03月03日11:38:06
+         * 解答成功: 执行耗时:2 ms,击败了95.83% 的Java用户 内存消耗:42.8 MB,击败了27.36% 的Java用户
+         *
+         * @param l1
+         * @param l2
+         * @return
+         */
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            if (l1 == null) return l2;
+            if (l2 == null) return l1;
+            ListNode dummyHead = new ListNode(0);
+            int carry = 0;
+            ListNode curNode = dummyHead;
+            while (l1 != null || l2 != null || carry > 0) {
+                int val = ((l1 == null) ? 0 : l1.val) + ((l2 == null) ? 0 : l2.val) + carry;
+                carry = val > 9 ? 1 : 0;
+                curNode.next = new ListNode(val % 10);
+                curNode = curNode.next;
+                l1 = l1 == null ? null : l1.next;
+                l2 = l2 == null ? null : l2.next;
+            }
+            return dummyHead.next;
+        }
+
+
+        /**
          * 解答成功: 执行耗时:2 ms,击败了94.82% 的Java用户 内存消耗:42.2 MB,击败了85.23% 的Java用户
          * 写作注意点：①定义nextNode指向dummyHead ②forward > 0也是循环的条件
          *
@@ -80,7 +106,7 @@ public class _2AddTwoNumbers {
          * @param l2
          * @return
          */
-        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        public ListNode addTwoNumbers_first(ListNode l1, ListNode l2) {
             ListNode dummyHead = new ListNode(0);
             int forward = 0;
             ListNode nextNode = dummyHead;
