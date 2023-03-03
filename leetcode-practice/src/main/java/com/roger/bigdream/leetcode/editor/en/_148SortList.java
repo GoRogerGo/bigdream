@@ -61,8 +61,8 @@ public class _148SortList {
      */
     class Solution {
         /**
-         * 解答成功: 执行耗时:11 ms,击败了80.35% 的Java用户 内存消耗:50.2 MB,击败了75.66% 的Java用户
-         * 心得：其实没那么难，需要①熟练掌握双指针法 ②有信心战胜递归
+         * 第二次编写 2023年03月03日11:04:45
+         * 解答成功: 执行耗时:12 ms,击败了64.65% 的Java用户 内存消耗:50.9 MB,击败了53.74% 的Java用
          *
          * @param head
          * @return
@@ -77,6 +77,24 @@ public class _148SortList {
             return mergeSort(left, right);
         }
 
+        private ListNode mergeSort(ListNode left, ListNode right) {
+            ListNode dummyHead = new ListNode(0);
+            ListNode curNode = dummyHead;
+            while (left != null && right != null) {
+                if (left.val < right.val) {
+                    curNode.next = left;
+                    left = left.next;
+                } else {
+                    curNode.next = right;
+                    right = right.next;
+                }
+                curNode = curNode.next;
+            }
+            if (left != null) curNode.next = left;
+            else curNode.next = right;
+            return dummyHead.next;
+        }
+
         private ListNode getMid(ListNode head) {
             ListNode midPrev = null;
             while (head != null && head.next != null) {
@@ -88,7 +106,35 @@ public class _148SortList {
             return mid;
         }
 
-        private ListNode mergeSort(ListNode left, ListNode right) {
+        /**
+         * 解答成功: 执行耗时:11 ms,击败了80.35% 的Java用户 内存消耗:50.2 MB,击败了75.66% 的Java用户
+         * 心得：其实没那么难，需要①熟练掌握双指针法 ②有信心战胜递归
+         *
+         * @param head
+         * @return
+         */
+        public ListNode sortList_first(ListNode head) {
+            // 初始判断
+            if (head == null || head.next == null) return head;
+            // 通过快慢指针法找出中间节点
+            ListNode mid = getMid_first(head);
+            ListNode left = sortList(head);
+            ListNode right = sortList(mid);
+            return mergeSort_first(left, right);
+        }
+
+        private ListNode getMid_first(ListNode head) {
+            ListNode midPrev = null;
+            while (head != null && head.next != null) {
+                midPrev = (midPrev == null) ? head : midPrev.next;
+                head = head.next.next;
+            }
+            ListNode mid = midPrev.next;
+            midPrev.next = null;
+            return mid;
+        }
+
+        private ListNode mergeSort_first(ListNode left, ListNode right) {
             ListNode dummyHead = new ListNode(0);
             ListNode node = dummyHead;
             while (left != null && right != null) {
