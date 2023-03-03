@@ -60,13 +60,15 @@ public class _206ReverseLinkedList {
     class Solution {
 
         /**
-         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:41.9 MB,击败了78.75% 的Java用户
-         * recursively
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:43 MB,击败了11.26% 的Java用户
+         * 第二次编写 还是不熟练 2023年03月03日15:22:29
+         * 注意点：①从head遍历节点时，要new一个出来 ②tail第一次是要被new节点去指的，那么它初始化是空。
          *
          * @param head
          * @return
          */
         public ListNode reverseList(ListNode head) {
+            if (head == null || head.next == null) return head;
             ListNode tail = null;
             return reverseList0(head, tail);
         }
@@ -74,9 +76,29 @@ public class _206ReverseLinkedList {
         private ListNode reverseList0(ListNode head, ListNode tail) {
             if (head == null) return tail;
             ListNode curNode = new ListNode(head.val);
+            curNode.next = tail; //用新增节点指向tail
+            tail = curNode; //tail挪到当前新增节点上，等待下一次被指
+            return reverseList0(head.next, tail);
+        }
+
+        /**
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:41.9 MB,击败了78.75% 的Java用户
+         * recursively
+         *
+         * @param head
+         * @return
+         */
+        public ListNode reverseList_first(ListNode head) {
+            ListNode tail = null;
+            return reverseList0_first(head, tail);
+        }
+
+        private ListNode reverseList0_first(ListNode head, ListNode tail) {
+            if (head == null) return tail;
+            ListNode curNode = new ListNode(head.val);
             curNode.next = tail;
             tail = curNode;
-            return reverseList0(head.next, tail);
+            return reverseList0_first(head.next, tail);
         }
 
         /**
