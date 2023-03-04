@@ -70,6 +70,30 @@ public class _23MergeKSortedLists {
      */
     class Solution {
         /**
+         * 看了花花的视频，能瞄一眼写对。2023年03月04日22:53:20
+         * 执行耗时:1 ms,击败了100.00% 的Java用户 内存消耗:44.9 MB,击败了18.47% 的Java用户
+         * 注意点：①什么叫做分治，好好体会下！②l,mid；mid+1,r，注意这个mid+1
+         *
+         * @param lists
+         * @return
+         */
+        public ListNode mergeKLists(ListNode[] lists) {
+            if (lists.length == 0) return null;
+            if (lists.length == 1) return lists[0];
+            return mergeKLists(lists, 0, lists.length - 1);
+        }
+
+        private ListNode mergeKLists(ListNode[] lists, int l, int r) {
+            if (l > r) return null;
+            if (l == r) return lists[l];
+            if (l + 1 == r) return mergeTwoLists(lists[l], lists[r]);
+            int mid = l + (r - l) / 2;
+            ListNode left = mergeKLists(lists, l, mid);
+            ListNode right = mergeKLists(lists, mid + 1, r);
+            return mergeTwoLists(left, right);
+        }
+
+        /**
          * 下午10:28	info
          * 解答成功:
          * 执行耗时:105 ms,击败了19.49% 的Java用户
@@ -80,7 +104,7 @@ public class _23MergeKSortedLists {
          * @param lists
          * @return
          */
-        public ListNode mergeKLists(ListNode[] lists) {
+        public ListNode mergeKLists_myself(ListNode[] lists) {
             if (lists.length == 0) return null;
             else if (lists.length == 1) return lists[0];
             else {
