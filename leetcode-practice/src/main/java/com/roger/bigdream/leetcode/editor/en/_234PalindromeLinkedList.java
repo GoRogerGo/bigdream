@@ -57,6 +57,12 @@ public class _234PalindromeLinkedList {
          * 解答成功: 执行耗时:4 ms,击败了84.52% 的Java用户 内存消耗:59.1 MB,击败了42.36% 的Java用户
          * 2023年03月06日09:38:02
          * 注意点：①反转链表还是不熟悉 ②回文类的用快慢指针法，如果快指针不是null，slow要next再去比较。
+         * 总结一下，标准写法是
+         * a = b
+         * b = c
+         * c = d
+         * d = a
+         * 那么，代入d = head , a = next, b = head.next, c = tail
          *
          * @param head
          * @return
