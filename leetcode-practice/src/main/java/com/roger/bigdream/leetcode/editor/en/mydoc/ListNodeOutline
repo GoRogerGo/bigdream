@@ -1,0 +1,14 @@
+链表专题
+_2AddTwoNumbers dummyHead
+_19RemoveNthNodeFromEndOfList 快慢指针
+_21MergeTwoSortedLists dummyHead
+_23MergeKSortedLists 递归，注意递归方法的定义
+_24SwapNodesInPairs dummyHead + 快慢指针：while (head.next != null && head.next.next != null)
+_141LinkedListCycle 快慢指针：while (fast != null)
+_142LinkedListCycleIi 快慢指针：while (fast != null && fast.next != null)
+_143ReorderList 快慢指针：while (fast.next != null && fast.next.next != null) 有点特殊
+_147InsertionSortList dummyHead
+_148SortList 快慢指针：while (head != null && head.next != null)
+_206ReverseLinkedList 固定模式
+_234PalindromeLinkedList 快慢指针：while (fast != null && fast.next != null)
+_445AddTwoNumbersIi 栈
