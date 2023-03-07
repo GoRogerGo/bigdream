@@ -37,19 +37,42 @@ package com.roger.bigdream.leetcode.editor.en;
 // Related Topics Array Binary Search 
 // 👍 20185 👎 1215
 
-public class _33SearchInRotatedSortedArray{
+public class _33SearchInRotatedSortedArray {
 
     public static void main(String[] args) {
         Solution solution = new _33SearchInRotatedSortedArray().new Solution();
+//        System.out.println(solution.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 0));
+//        System.out.println(solution.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 3));
+//        System.out.println(solution.search(new int[]{1}, 0));
+//        System.out.println(solution.search(new int[]{1}, 1));
+//        System.out.println(solution.search(new int[]{1, 3}, 1));
+//        System.out.println(solution.search(new int[]{1, 3}, 0));
+        System.out.println(solution.search(new int[]{3, 1}, 3));
 
     }
 
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int search(int[] nums, int target) {
-        
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+
+        public int search(int[] nums, int target) {
+            return -1;
+        }
+
+        public int search_myWrongAnswer(int[] nums, int target) {
+            int temp = -1;
+            int index = -1;
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] == target) index = i;
+                if (nums[i] > temp) {
+                    temp = nums[i];
+                    continue;
+                } else {
+                    return target == nums[i] ? i : -1;
+                }
+            }
+            return index;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 
