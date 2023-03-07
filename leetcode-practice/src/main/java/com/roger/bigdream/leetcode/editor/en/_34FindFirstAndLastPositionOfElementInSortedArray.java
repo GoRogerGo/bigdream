@@ -46,6 +46,49 @@ public class _34FindFirstAndLastPositionOfElementInSortedArray {
         private int[] defaultResult = new int[]{-1, -1};
 
         /**
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:45.9 MB,击败了28.58% 的Java用户
+         * 这是三年前的写法，和自己Time Limit Exceeded的思路是一样的，没啥本质区别┭┮﹏┭┮
+         * 2023年03月07日11:26:07
+         *
+         * @param nums
+         * @param target
+         * @return
+         */
+        public int[] searchRange(int[] nums, int target) {
+            int[] result = new int[]{-1, -1};
+            int low = 0, high = nums.length - 1;
+            while (low <= high) {
+                int mid = (low + high) / 2;
+                if (nums[mid] < target) {
+                    low = mid + 1;
+                } else if (nums[mid] > target) {
+                    high = mid - 1;
+                } else {
+                    while (low <= mid) {
+                        if (nums[low] != target) {
+                            low++;
+                            continue;
+                        } else {
+                            result[0] = low;
+                            break;
+                        }
+                    }
+                    while (high >= mid) {
+                        if (nums[high] != target) {
+                            high--;
+                            continue;
+                        } else {
+                            result[1] = high;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            return result;
+        }
+
+        /**
          * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:46.2 MB,击败了16.93% 的Java用户
          * 花花的做法，有点新奇，想不到，等到第二次再自己写一遍吧
          * 2023年03月07日11:20:12
@@ -54,7 +97,7 @@ public class _34FindFirstAndLastPositionOfElementInSortedArray {
          * @param target
          * @return
          */
-        public int[] searchRange(int[] nums, int target) {
+        public int[] searchRange_huahua(int[] nums, int target) {
             return new int[]{firstPos(nums, target), lastPos(nums, target)};
         }
 
