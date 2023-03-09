@@ -12,3 +12,7 @@ _148SortList 快慢指针：while (head != null && head.next != null)
 _206ReverseLinkedList 固定模式
 _234PalindromeLinkedList 快慢指针：while (fast != null && fast.next != null)
 _445AddTwoNumbersIi 栈
+
+数组专题
+no153/no154答案一致
+no162/no852答案一致
