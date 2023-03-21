@@ -13,6 +13,27 @@ _206ReverseLinkedList 固定模式
 _234PalindromeLinkedList 快慢指针：while (fast != null && fast.next != null)
 _445AddTwoNumbersIi 栈
 
-数组专题
-no153/no154答案一致
-no162/no852答案一致
+数组专题（二分搜索）
+_35SearchInsertPosition 等值判断，r=nums.length
+_34FindFirstAndLastPositionOfElementInSortedArray 类似{firstPos(nums, target), lastPos(nums, target)}这种分别求解的写法完全没有想象能力
+_704BinarySearch 等值查找就是length-1，寻找位置就是length
+_33SearchInRotatedSortedArray 吾天赋不可直得*
+_81SearchInRotatedSortedArrayIi 类似search(nums, l, mid, target) || search(nums, mid + 1, r, target)这种或的写法完全没有想象能力
+_153FindMinimumInRotatedSortedArray no153/no154答案一致
+_154FindMinimumInRotatedSortedArrayIi 类似Math.min(findMin(nums, l, mid - 1), findMin(nums, mid, r))这种分别求解的写法完全没有想象能力
+_162FindPeakElement no162/no852答案一致
+_852PeakIndexInAMountainArray 看起来很简单，但需要有逻辑推导和计算的，我都是自己想想就算了。。。
+_69Sqrtx ①循环条件是l <= r（小于等于），②判断条件是mid > x / mid ③有终止条件是mid-1
+_74SearchA2dMatrix 直接将二维数组给拉长了，视为一个长数组！①matrix.length * matrix[0].length ②[m / cols][m % cols]
+_875KokoEatingBananas ①return l是精髓啊 ②标准写法是(p + m - 1) / m
+_1011CapacityToShipPackagesWithinDDays overload的场景需要提前终止
+_4MedianOfTwoSortedArrays 比较难 推论1：在nums1的区间[0,m]里查找恰当的分割线。 推论1：分割线左边的所有元素要满足的个数是(m+n+1)/2 推论2：将分割线右边的数字下标分别定义为i,j，那么nums1[i-1]<=nums2[j] && nums2[j-1]<=nums1[i]
+_378KthSmallestElementInASortedMatrix ①和no240有共性和差异，差异是result += (i + 1)，这一点很精妙 ②起始l和r的取值 ③ countSmallOrEquals的妙用
+_240SearchA2dMatrixIi 题目条件没有利用起来，它每一列也是升序，而我的做法宽一点，只用到了每一行是升序
+_668KthSmallestNumberInMultiplicationTable 对乘法表的特性不甚了解
+_719FindKThSmallestPairDistance 完全抄的，不懂第二个while循环的含义
+no981和no786有点难了，看答案也不懂，就没有写
+
+
+数组专题（双指针）
+_88MergeSortedArray 从后向前拷贝
