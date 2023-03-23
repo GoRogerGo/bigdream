@@ -44,19 +44,46 @@ package com.roger.bigdream.leetcode.editor.en;
 // Related Topics Array Two Pointers Greedy Sorting 
 // 👍 2143 👎 210
 
-public class _455AssignCookies{
+import java.util.Arrays;
+
+public class _455AssignCookies {
 
     public static void main(String[] args) {
         Solution solution = new _455AssignCookies().new Solution();
+        System.out.println(solution.findContentChildren(new int[]{1, 2, 3}, new int[]{1, 1}));
+        System.out.println(solution.findContentChildren(new int[]{1, 2}, new int[]{1, 2, 3}));
 
     }
 
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int findContentChildren(int[] g, int[] s) {
-        return -1;
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        /**
+         * 解答成功: 执行耗时:8 ms,击败了87.57% 的Java用户 内存消耗:44.1 MB,击败了14.67% 的Java用
+         * 2023年03月23日11:05:21
+         * 自己的答案，一次过
+         *
+         * @param g
+         * @param s
+         * @return
+         */
+        public int findContentChildren(int[] g, int[] s) {
+            Arrays.sort(g);
+            Arrays.sort(s);
+            int res = 0;
+            int glen = g.length;
+            int slen = s.length;
+            while (glen > 0 && slen > 0) {
+                if (s[slen - 1] >= g[glen - 1]) {
+                    res++;
+                    slen--;
+                    glen--;
+                } else {
+                    glen--;
+                }
+            }
+            return res;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 
