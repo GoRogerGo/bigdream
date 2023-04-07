@@ -46,6 +46,15 @@ _917ReverseOnlyLetters
 _925LongPressedName
 _986IntervalListIntersections
 no855有点开放式了，看答案也不懂，就没有写
+_167TwoSumIiInputArrayIsSorted
+_15ThreeSum
+_16ThreeSumClosest
+_977SquaresOfASortedArray
+_992SubarraysWithKDifferentIntegers
+_3LongestSubstringWithoutRepeatingCharacters
+_76MinimumWindowSubstring
+_209MinimumSizeSubarraySum
+_424LongestRepeatingCharacterReplacement
 
 
 动态规划
