@@ -39,19 +39,39 @@ package com.roger.bigdream.leetcode.editor.en;
 // Related Topics Hash Table String Sliding Window 
 // 👍 32958 👎 1439
 
-public class _3LongestSubstringWithoutRepeatingCharacters{
+import java.util.Arrays;
+
+public class _3LongestSubstringWithoutRepeatingCharacters {
 
     public static void main(String[] args) {
         Solution solution = new _3LongestSubstringWithoutRepeatingCharacters().new Solution();
-
+        solution.lengthOfLongestSubstring("abcabcbb");
     }
 
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int lengthOfLongestSubstring(String s) {
-        return -1;
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        /**
+         * 解答成功: 执行耗时:3 ms,击败了95.93% 的Java用户 内存消耗:43 MB,击败了29.85% 的Java用户
+         * 2023年04月07日17:24:13
+         * 直接看的花花的答案，挺精妙的
+         *
+         * @param s
+         * @return
+         */
+        public int lengthOfLongestSubstring(String s) {
+            int[] last = new int[128];
+            Arrays.fill(last, -1);
+            int ans = 0, start = 0;
+            for (int i = 0; i < s.length(); i++) {
+                if (last[s.charAt(i)] != -1) {
+                    start = Math.max(start, last[s.charAt(i)] + 1);
+                }
+                last[s.charAt(i)] = i;
+                ans = Math.max(ans, i - start + 1);
+            }
+            return ans;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 
