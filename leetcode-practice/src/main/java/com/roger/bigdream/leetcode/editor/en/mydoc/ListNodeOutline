@@ -55,6 +55,7 @@ _3LongestSubstringWithoutRepeatingCharacters
 _76MinimumWindowSubstring
 _209MinimumSizeSubarraySum
 _424LongestRepeatingCharacterReplacement
+上面这5题都还挺吃力的
 
 
 动态规划
