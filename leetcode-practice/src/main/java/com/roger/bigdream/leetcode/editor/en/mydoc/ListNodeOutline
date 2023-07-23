@@ -58,9 +58,89 @@ _424LongestRepeatingCharacterReplacement
 上面这5题都还挺吃力的
 
 
-动态规划
+递归专题
+_50PowxN
+
+
+动态规划专题
 _5LongestPalindromicSubstring
 
 
+字符串专题
 _214ShortestPalindrome
 _409LongestPalindrome
+
+
+
+
+Array 数组 1414
+String 字符串 624
+Hash Table 哈希表 487
+Dynamic Programming 动态规划 438
+Math 数学 438
+Sorting 排序 329
+Greedy 贪心算法 312
+Depth-First Search 深度优先搜索 275
+Database 数据库 229
+Binary Search 二分搜索 228
+Breadth-First Search 广度优先搜索 218
+Tree 树 215
+Matrix 矩阵 199
+Two Pointers 双指针 171
+Binary Tree 二叉树 170
+Bit Manipulation 位操作 164
+Heap (Priority Queue) 堆(优先队列) 145
+Stack 栈 144
+Graph 图 130
+Prefix Sum 前缀和 129
+Simulation 模拟 127
+Design 设计 123
+Backtracking 回溯 100
+Counting 计数 98
+Sliding Window 滑动窗口 92
+Union Find 并查集 76
+Linked List 链表 70
+Ordered Set 有序集合 56
+Enumeration 枚举 51
+Monotonic Stack 单调栈 50
+Trie 单词查找树 45
+Recursion 递归 44
+Divide and Conquer 分治算法 44
+Bitmask 位掩码 40
+Number Theory 数论 40
+Queue 队列 40
+Binary Search Tree 二叉搜索树 40
+Segment Tree 线段树 35
+Memoization 记忆化 34
+Geometry 几何 32
+Topological Sort 拓扑排序 31
+Binary Indexed Tree 二叉索引树 29
+Hash Function 哈希函数 25
+Game Theory 游戏论 24
+Shortest Path 最短路径 23
+Interactive 交互论 19
+Combinatorics 组合数学 19
+Data Stream 数据流 18
+String Matching 字符串匹配 18
+Rolling Hash 滚动哈希 18
+Brainteaser 脑经急转弯 16
+Randomized 随机数 12
+Monotonic Queue 单调队列 12
+Merge Sort 归并 11
+Iterator 迭代器 9
+Concurrency 并发 9
+Doubly-Linked List 双向链表 8
+Probability and Statistics 概率与统计 7
+Quickselect 快排 7
+Bucket Sort 桶排序 6
+Suffix Array 后缀数组 6
+Minimum Spanning Tree 最小生成树 5
+Counting Sort 计数排序 5
+Shell 4
+Line Sweep 扫描线算法 4
+Reservoir Sampling 蓄水池抽样算法 4
+Eulerian Circuit 欧拉回路 3
+Radix Sort 基数排序 3
+Strongly Connected Component 强连通分量 2
+Rejection Sampling 拒绝采样 2
+Biconnected Component 重连通分量
