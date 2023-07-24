@@ -61,6 +61,11 @@ public class _146LruCache {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class LRUCache {
+        /**
+         * 估计是用了hashtable，无法编译通过
+         * 2023年07月24日12:52:42
+         * 直接看的别人的代码，下次再写一遍
+         */
         class DLinkedNode {
             int key;
             int value;
