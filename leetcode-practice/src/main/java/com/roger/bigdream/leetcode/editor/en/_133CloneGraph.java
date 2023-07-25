@@ -71,7 +71,10 @@ package com.roger.bigdream.leetcode.editor.en;
 // Related Topics Hash Table Depth-First Search Breadth-First Search Graph 
 // 👍 8563 👎 3416
 
-public class _133CloneGraph{
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class _133CloneGraph {
 
     public static void main(String[] args) {
         Solution solution = new _133CloneGraph().new Solution();
@@ -99,11 +102,42 @@ class Node {
 }
 */
 
-class Solution {
-    public Node cloneGraph(Node node) {
-        return null;
+    class Solution {
+        private HashMap<Node, Node> visited = new HashMap<>();
+
+
+        /**
+         * 解答成功:
+         * 执行耗时:25 ms,击败了94.86% 的Java用户
+         * 内存消耗:42.2 MB,击败了33.79% 的Java用户
+         * <p>
+         * 2023年07月25日16:16:17
+         *
+         * @param node
+         * @return
+         */
+        public Node cloneGraph(Node node) {
+            if (node == null) {
+                return node;
+            }
+
+            // 如果该节点已经被访问过了，则直接从哈希表中取出对应的克隆节点返回
+            if (visited.containsKey(node)) {
+                return visited.get(node);
+            }
+
+            // 克隆节点，注意到为了深拷贝我们不会克隆它的邻居的列表
+            Node cloneNode = new Node(node.val, new ArrayList());
+            // 哈希表存储
+            visited.put(node, cloneNode);
+
+            // 遍历该节点的邻居并更新克隆节点的邻居列表
+            for (Node neighbor : node.neighbors) {
+                cloneNode.neighbors.add(cloneGraph(neighbor));
+            }
+            return cloneNode;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 
