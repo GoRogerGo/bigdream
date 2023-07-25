@@ -39,7 +39,7 @@ package com.roger.bigdream.leetcode.editor.en;
 //e 
 // 👍 5501 👎 70
 
-public class _1008ConstructBinarySearchTreeFromPreorderTraversal{
+public class _1008ConstructBinarySearchTreeFromPreorderTraversal {
 
     public static void main(String[] args) {
         Solution solution = new _1008ConstructBinarySearchTreeFromPreorderTraversal().new Solution();
@@ -47,26 +47,54 @@ public class _1008ConstructBinarySearchTreeFromPreorderTraversal{
     }
 
 //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution {
-    public TreeNode bstFromPreorder(int[] preorder) {
-        return null;
+
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     * int val;
+     * TreeNode left;
+     * TreeNode right;
+     * TreeNode() {}
+     * TreeNode(int val) { this.val = val; }
+     * TreeNode(int val, TreeNode left, TreeNode right) {
+     * this.val = val;
+     * this.left = left;
+     * this.right = right;
+     * }
+     * }
+     */
+    class Solution {
+        public TreeNode bstFromPreorder(int[] preorder) {
+            if (preorder.length == 0) return null;
+            return bstFromPreorder0(preorder, 0, preorder.length - 1);
+        }
+
+        /**
+         * 解答成功:
+         * 执行耗时:0 ms,击败了100.00% 的Java用户
+         * 内存消耗:40.9 MB,击败了33.16% 的Java用户
+         * <p>
+         * 2023年07月25日08:26:45
+         *
+         * @param preorder
+         * @param l
+         * @param r
+         * @return
+         */
+        private TreeNode bstFromPreorder0(int[] preorder, int l, int r) {
+            if (l > r) return null;
+            int val = preorder[l];
+            int index;//global index in order to find  wheere the actual break happened
+            for (index = l; index <= r; index++) {
+                if (preorder[index] > preorder[l])//finding the starting index of right subtree
+                    break;
+            }
+            TreeNode node = new TreeNode(val);
+            node.left = bstFromPreorder0(preorder, l + 1, index - 1);
+            node.right = bstFromPreorder0(preorder, index, r);
+            return node;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 

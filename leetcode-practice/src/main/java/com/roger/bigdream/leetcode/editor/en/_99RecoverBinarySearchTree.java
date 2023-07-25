@@ -32,8 +32,7 @@ package com.roger.bigdream.leetcode.editor.en;
 //
 // 
 //Follow up: A solution using O(n) space is pretty straight-forward. Could you d
-//evise a constant O(1) space solution? Related Topics Tree Depth-First Search Bin
-//ary Search Tree Binary Tree 
+//evise a constant O(1) space solution? Related Topics Tree Depth-First Search Binary Search Tree Binary Tree
 // 👍 7249 👎 236
 
 public class _99RecoverBinarySearchTree {

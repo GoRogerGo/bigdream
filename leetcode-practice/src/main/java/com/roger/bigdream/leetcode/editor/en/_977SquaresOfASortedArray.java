@@ -30,8 +30,7 @@ package com.roger.bigdream.leetcode.editor.en;
 //
 // 
 //Follow up: Squaring each element and sorting the new array is very trivial, co
-//uld you find an O(n) solution using a different approach? Related Topics Array T
-//wo Pointers Sorting 
+//uld you find an O(n) solution using a different approach? Related Topics Array Two Pointers Sorting
 // 👍 7578 👎 188
 
 public class _977SquaresOfASortedArray {

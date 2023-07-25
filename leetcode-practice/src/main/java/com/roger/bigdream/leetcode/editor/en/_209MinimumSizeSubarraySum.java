@@ -38,8 +38,7 @@ package com.roger.bigdream.leetcode.editor.en;
 //
 // 
 //Follow up: If you have figured out the O(n) solution, try coding another solut
-//ion of which the time complexity is O(n log(n)). Related Topics Array Binary Sea
-//rch Sliding Window Prefix Sum 
+//ion of which the time complexity is O(n log(n)). Related Topics Array Binary Search Sliding Window Prefix Sum
 // 👍 9041 👎 248
 
 public class _209MinimumSizeSubarraySum{
