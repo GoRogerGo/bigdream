@@ -132,8 +132,8 @@ class Node {
             visited.put(node, cloneNode);
 
             // 遍历该节点的邻居并更新克隆节点的邻居列表
-            for (Node neighbor : node.neighbors) {
-                cloneNode.neighbors.add(cloneGraph(neighbor));
+            for (Node neighbor : node.children) {
+                cloneNode.children.add(cloneGraph(neighbor));
             }
             return cloneNode;
         }
