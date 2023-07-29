@@ -52,6 +52,44 @@ public class _81SearchInRotatedSortedArrayIi {
         }
 
         /**
+         * 官方答案
+         * 2023年07月29日12:05:38
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:42.6 MB,击败了98.83% 的Java用户
+         *
+         * @param nums
+         * @param l
+         * @param r
+         * @param target
+         * @return
+         */
+        private boolean search(int[] nums, int l, int r, int target) {
+            if (nums.length == 0) return false;
+            if (nums.length == 1) return nums[0] == target;
+            while (l <= r) {
+                int mid = l + (r - l) / 2;
+                if (nums[mid] == target) return true; //先比较mid位置的值是否符合target
+
+                if (nums[l] == nums[mid] && nums[mid] == nums[r]) { //和33题最大的区别在这里
+                    l++;
+                    r--;
+                } else if (nums[l] <= nums[mid]) { //这里是小于等于
+                    if (nums[l] <= target && target < nums[mid]) { //前闭后开
+                        r = mid - 1; //这里是mid-1，不是r = mid
+                    } else {
+                        l = mid + 1;
+                    }
+                } else {
+                    if (nums[mid] < target && target <= nums[nums.length - 1]) { //前开后闭，这里是nums[nums.length - 1]，不是nums[r]
+                        l = mid + 1;
+                    } else {
+                        r = mid - 1; //这里是mid-1，不是r = mid
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
          * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:42.5 MB,击败了23.83% 的Java用户
          * 2023年03月09日15:53:43
          * 这是花花的答案，第一次写没有思路。
@@ -66,14 +104,14 @@ public class _81SearchInRotatedSortedArrayIi {
          * @param target
          * @return
          */
-        private boolean search(int[] nums, int l, int r, int target) {
+        private boolean search_huahua(int[] nums, int l, int r, int target) {
             if (l > r) return false;
             if (l == r) return nums[l] == target;
             int mid = l + (r - l) / 2;
             if (nums[l] < nums[mid] && nums[mid] < nums[r]) {
-                return target <= nums[mid] ? search(nums, l, mid, target) : search(nums, mid + 1, r, target);
+                return target <= nums[mid] ? search_huahua(nums, l, mid, target) : search_huahua(nums, mid + 1, r, target);
             } else {
-                return search(nums, l, mid, target) || search(nums, mid + 1, r, target);
+                return search_huahua(nums, l, mid, target) || search_huahua(nums, mid + 1, r, target);
             }
         }
     }

@@ -46,6 +46,42 @@ public class _34FindFirstAndLastPositionOfElementInSortedArray {
         private int[] defaultResult = new int[]{-1, -1};
 
         /**
+         * 考虑target开始和结束位置，其实我们要找的就是数组中「第一个等于target的位置」（记为leftIdx）和「第一个大于target的位置减一」（记为rightIdx）。
+         * 二分查找中，寻找leftIdx即为在数组中寻找第一个大于等于target的下标，寻找rightIdx即为在数组中寻找第一个大于target的下标，然后将下标减一。两者的判断条件不同，为了代码的复用，我们定义binarySearch(nums,target,lower)表示在nums数组中二分查找target的位置，如果lower为true，则查找第一个大于等于target的下标，否则查找第一个大于target的下标。
+         * 最后，因为target可能不存在数组中，因此我们需要重新校验我们得到的两个下标leftIdx和rightIdx，看是否符合条件，如果符合条件就返回[leftIdx,rightIdx]，不符合就返回[−1,−1]。
+         * <p>
+         * 2023年07月29日10:34:17
+         * 官网答案
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:44.8 MB,击败了6.36% 的Java用户
+         *
+         * @param nums
+         * @param target
+         * @return
+         */
+        public int[] searchRange(int[] nums, int target) {
+            int leftIdx = binarySearch(nums, target, true);
+            int rightIdx = binarySearch(nums, target, false) - 1;
+            if (leftIdx <= rightIdx && rightIdx < nums.length && nums[leftIdx] == target && nums[rightIdx] == target) {
+                return new int[]{leftIdx, rightIdx};
+            }
+            return new int[]{-1, -1};
+        }
+
+        public int binarySearch(int[] nums, int target, boolean lower) {
+            int left = 0, right = nums.length - 1, ans = nums.length;
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                if (nums[mid] > target || (lower && nums[mid] >= target)) {
+                    right = mid - 1;
+                    ans = mid;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            return ans;
+        }
+
+        /**
          * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:45.9 MB,击败了28.58% 的Java用户
          * 这是三年前的写法，和自己Time Limit Exceeded的思路是一样的，没啥本质区别┭┮﹏┭┮
          * 2023年03月07日11:26:07
@@ -54,7 +90,7 @@ public class _34FindFirstAndLastPositionOfElementInSortedArray {
          * @param target
          * @return
          */
-        public int[] searchRange(int[] nums, int target) {
+        public int[] searchRange_11(int[] nums, int target) {
             int[] result = new int[]{-1, -1};
             int low = 0, high = nums.length - 1;
             while (low <= high) {

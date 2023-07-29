@@ -51,8 +51,29 @@ public class _154FindMinimumInRotatedSortedArrayIi {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        /**
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:43.1 MB,击败了67.29% 的Java用户
+         * 官方答案
+         * 2023年07月29日12:23:31
+         * 和no153类似
+         *
+         * @param nums
+         * @return
+         */
         public int findMin(int[] nums) {
-            return findMin(nums, 0, nums.length - 1);
+            int l = 0, r = nums.length - 1;
+            while (l < r) {
+                int pivot = l + (r - l) / 2;
+                if (nums[pivot] < nums[r]) {
+                    r = pivot;
+                } else if (nums[pivot] > nums[r]) {
+                    l = pivot + 1;
+                } else {
+                    r -= 1;
+                }
+            }
+            return nums[l];
+//            return findMin(nums, 0, nums.length - 1);
         }
 
         /**

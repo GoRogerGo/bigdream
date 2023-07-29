@@ -53,6 +53,49 @@ public class _33SearchInRotatedSortedArray {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+
+        /**
+         * * mid的左边或右边 至少有一边是有序的。比较有序那边的大小，落在区间则改到这个区间，否则去另一个区间检索。
+         * * 有序的判断就是看区间两端是否大小一致。
+         * 2023年07月29日11:49:57
+         * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:41.2 MB,击败了30.65% 的Java用户
+         * 官网答案
+         *
+         * @param nums
+         * @param target
+         * @return
+         */
+        public int search(int[] nums, int target) {
+            int n = nums.length;
+            if (n == 0) {
+                return -1;
+            }
+            if (n == 1) {
+                return nums[0] == target ? 0 : -1;
+            }
+            int l = 0, r = n - 1;
+            while (l <= r) {
+                int mid = (l + r) / 2;
+                if (nums[mid] == target) {
+                    return mid;
+                }
+                if (nums[0] <= nums[mid]) { //左半边有序
+                    if (nums[0] <= target && target < nums[mid]) {
+                        r = mid - 1;
+                    } else {
+                        l = mid + 1;
+                    }
+                } else {
+                    if (nums[mid] < target && target <= nums[n - 1]) { //右半边有序
+                        l = mid + 1;
+                    } else {
+                        r = mid - 1;
+                    }
+                }
+            }
+            return -1;
+        }
+
         /**
          * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:42.4 MB,击败了14.79% 的Java用户
          * 2023年03月09日11:06:57
@@ -62,7 +105,7 @@ public class _33SearchInRotatedSortedArray {
          * @param target
          * @return
          */
-        public int search(int[] nums, int target) {
+        public int search_huahua(int[] nums, int target) {
             int l = 0, r = nums.length;
             while (l < r) {
                 int mid = l + (r - l) / 2;
