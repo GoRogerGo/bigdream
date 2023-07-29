@@ -71,10 +71,10 @@ public class _61RotateList {
             if (head == null || head.next == null || k == 0) return head;
             int count = 1;
 
-            ListNode node = head;
-            while (node.next != null) {
+            ListNode tail = head;
+            while (tail.next != null) {
                 count++;
-                node = node.next;
+                tail = tail.next;
             }
 //            ListNode tail = node; 改动3：这行代码很不优雅，其实node就是tail
 
@@ -83,16 +83,16 @@ public class _61RotateList {
             if (k == 0) return head;
 
 
-            ListNode P = head;
+            ListNode pivot = head;
             for (int i = 0; i < count - k - 1; i++) {
 //                for (int i = 0; i < kk; i++) { 改动2：moving数不对，不是k，是count - k -1
-                P = P.next;
+                pivot = pivot.next;
             }
-            ListNode N = P.next;
-            P.next = null;
+            ListNode newHead = pivot.next;
+            pivot.next = null;
 //            tail.next = head; 接改动3：这里用node
-            node.next = head;
-            return N;
+            tail.next = head;
+            return newHead;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

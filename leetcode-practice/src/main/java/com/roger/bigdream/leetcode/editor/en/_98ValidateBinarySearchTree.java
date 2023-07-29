@@ -67,23 +67,24 @@ public class _98ValidateBinarySearchTree {
          * 解答成功:
          * 执行耗时:0 ms,击败了100.00% 的Java用户
          * 内存消耗:44.2 MB,击败了37.12% 的Java用户
-         * <p>
+         * <p> 这种写法就更清晰了
          * 2023年07月24日16:32:20
          *
          * @param root
          * @return
          */
         public boolean isValidBST(TreeNode root) {
-            return validate(root, null, null);
+            return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
         }
 
-        private boolean validate(TreeNode root, TreeNode left, TreeNode right) {
-            if (root == null) return true;
-            if (null != left && root.val <= left.val || null != right && root.val >= right.val)
+        public boolean isValidBST(TreeNode node, long lower, long upper) {
+            if (node == null) {
+                return true;
+            }
+            if (node.val <= lower || node.val >= upper) {
                 return false;
-            // 二叉查找树要求，在树中的任意一个节点，其左子树中的每个节点的值，都要小于这个节点的值，而右子树节点的值都大于这个节点的值。
-            // 右子树节点的下限是根节点，上限不动；左子树节点的上限是根节点，下限不动；
-            return validate(root.right, root, right) && validate(root.left, left, root);
+            }
+            return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
