@@ -55,6 +55,44 @@ public class _875KokoEatingBananas {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+
+        /**
+         * 2023年07月29日09:45:40
+         * 官网答案，比花花的代码多，但是更清晰
+         *
+         * @param piles
+         * @param h
+         * @return
+         */
+        public int minEatingSpeed(int[] piles, int h) {
+            int low = 1;
+            int high = 0;
+            for (int pile : piles) {
+                high = Math.max(high, pile);
+            }
+            int k = high;
+            while (low < high) {
+                int speed = (high - low) / 2 + low;
+                long time = getTime(piles, speed);
+                if (time <= h) {
+                    k = speed;
+                    high = speed;
+                } else {
+                    low = speed + 1;
+                }
+            }
+            return k;
+        }
+
+        private long getTime(int[] piles, int speed) {
+            long time = 0;
+            for (int pile : piles) {
+                int curTime = (pile + speed - 1) / speed;
+                time += curTime;
+            }
+            return time;
+        }
+
         /**
          * 解答成功: 执行耗时:10 ms,击败了96.73% 的Java用户 内存消耗:43.4 MB,击败了50.28% 的Java用户
          * 2023年03月14日17:27:13
@@ -66,7 +104,7 @@ public class _875KokoEatingBananas {
          * @param h
          * @return
          */
-        public int minEatingSpeed(int[] piles, int h) {
+        public int minEatingSpeed_huahua(int[] piles, int h) {
             int l = 1;
             int r = Integer.MIN_VALUE;
             for (int i = 0; i < piles.length; i++) {

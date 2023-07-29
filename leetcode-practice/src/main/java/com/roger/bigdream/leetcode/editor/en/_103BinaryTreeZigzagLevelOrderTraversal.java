@@ -95,7 +95,7 @@ public class _103BinaryTreeZigzagLevelOrderTraversal {
                         queue.offer(node.right);
                     }
                 }
-                ret.add(new LinkedList<Integer>()); //注意写法
+                ret.add(new LinkedList<>(res)); //注意写法
                 isOrderLeft = !isOrderLeft; //灵魂之笔
             }
             return ret;

@@ -60,6 +60,24 @@ public class _206ReverseLinkedList {
     class Solution {
 
         /**
+         * 2023年07月28日22:22:48 这次看了视频讲解，好像理解了。。。
+         *
+         * @param head
+         * @return
+         */
+        public ListNode reverseList(ListNode head) {
+            ListNode prev = null;
+            ListNode curr = head;
+            while (curr != null) {
+                ListNode next = curr.next; //暂存
+                curr.next = prev; //链表反转
+                prev = curr; //两个元素向后移动
+                curr = next;
+            }
+            return prev;
+        }
+
+        /**
          * 解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:43 MB,击败了11.26% 的Java用户
          * 第二次编写 还是不熟练 2023年03月03日15:22:29
          * 注意点：①从head遍历节点时，要new一个出来 ②tail第一次是要被new节点去指的，那么它初始化是空。
@@ -67,7 +85,7 @@ public class _206ReverseLinkedList {
          * @param head
          * @return
          */
-        public ListNode reverseList(ListNode head) {
+        public ListNode reverseList_1(ListNode head) {
             if (head == null || head.next == null) return head;
             ListNode tail = null;
             return reverseList0(head, tail);

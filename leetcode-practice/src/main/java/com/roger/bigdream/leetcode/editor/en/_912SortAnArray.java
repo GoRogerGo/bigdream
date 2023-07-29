@@ -116,16 +116,18 @@ public class _912SortAnArray {
             int i = left;
             for (int j = left; j < right; j++) {
                 if (nums[j] < pivot) {
-                    int temp = nums[j];
-                    nums[j] = nums[i];
-                    nums[i] = temp;
+                    swap(nums, i, j);
                     i++;
                 }
             }
-            int temp = nums[right];
-            nums[right] = nums[i];
-            nums[i] = temp;
+            swap(nums, i, right);
             return i;
+        }
+
+        private void swap(int[] nums, int i, int j) {
+            int temp = nums[j];
+            nums[j] = nums[i];
+            nums[i] = temp;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
