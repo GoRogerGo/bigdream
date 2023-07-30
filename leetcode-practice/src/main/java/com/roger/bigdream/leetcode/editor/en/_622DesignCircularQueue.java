@@ -67,7 +67,7 @@ package com.roger.bigdream.leetcode.editor.en;
 
 public class _622DesignCircularQueue {
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         MyCircularQueue myCircularQueue = new MyCircularQueue(3);
         myCircularQueue.enQueue(1); // return True
         myCircularQueue.enQueue(2); // return True
@@ -81,46 +81,59 @@ public class _622DesignCircularQueue {
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
-    static class MyCircularQueue {
+    class MyCircularQueue {
 
-        private int[] items;
-        private int n = 0;
-        private int head = 0;
-        private int tail = 0;
+        private int[] elements;
+        private int capacity = 0;
+        private int front = 0;
+        private int rear = 0;
 
+        /**
+         * 解答成功: 执行耗时:4 ms,击败了100.00% 的Java用户 内存消耗:44.4 MB,击败了54.14% 的Java用户
+         * 2023年07月30日12:13:46
+         * 有多个易错的地方，牢记吧
+         *
+         * @param k
+         */
         public MyCircularQueue(int k) {
-            n = k + 1;
-            items = new int[k + 1];
+            capacity = k + 1;
+            elements = new int[k + 1];
         }
 
         public boolean enQueue(int value) {
-            if ((tail + 1) % n == head) return false;
-            items[tail] = value;
-            tail = (tail + 1) % n; //这行易错
+            if (isFull()) return false;
+            elements[rear] = value;
+            rear = (rear + 1) % capacity; //这行易错
             return true;
         }
 
         public boolean deQueue() {
-            if (head == tail) return false; //这行易错
-            head = (head + 1) % n; //这行易错
+            if (isEmpty()) return false;
+            front = (front + 1) % capacity; //这行易错
             return true;
         }
 
         public int Front() {
-            return items[head];
+            if (isEmpty()) {
+                return -1;
+            }
+            return elements[front];
         }
 
         public int Rear() {
-            return items[tail];
+            if (isEmpty()) {
+                return -1;
+            }
+            return elements[(rear - 1 + capacity) % capacity]; //这行易错
         }
 
         public boolean isEmpty() {
-            return head == tail;
+            return front == rear;
         }
 
         public boolean isFull() {
-            return (tail + 1) % n == head;
-        }
+            return (rear + 1) % capacity == front;
+        } //这行易错
     }
 
 /**
