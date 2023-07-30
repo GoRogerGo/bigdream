@@ -71,52 +71,65 @@ public class _501FindModeInBinarySearchTree {
      * }
      */
     /**
-     * 解答成功:
-     * 执行耗时:0 ms,击败了100.00% 的Java用户
-     * 内存消耗:43.9 MB,击败了78.09% 的Java用户
+     * 我们可以顺序扫描中序遍历序列，用base记录当前的数字，用count记录当前数字重复的次数，用maxCount来维护已经扫描过的数当中出现最多的那个数字的出现次数，用answer 数组记录出现的众数。
+     * 每次扫描到一个新的元素：
      * <p>
-     * 看以前的代码结果的，可以参考视频
-     * https://leetcode.cn/problems/find-mode-in-binary-search-tree/solution/java-duo-jie-fa-qing-xi-yi-dong-by-ventu-6mae/
+     * 首先更新base 和count:如果该元素和base 相等，那么count 自增1；
+     * 否则将base 更新为当前数字，count 复位为1。
+     * 然后更新maxCount：
+     * 如果count=maxCount，那么说明当前的这个数字（base）出现的次数等于当前众数出现的次数，将base 加入answer 数组；
+     * 如果count>maxCount，那么说明当前的这个数字（base）出现的次数大于当前众数出现的次数，因此，我们需要将maxCount 更新为count，清空answer 数组后将base 加入answer 数组。
+     * 我们可以把这个过程写成一个update 函数。这样我们在寻找出现次数最多的数字的时候就可以省去一个哈希表带来的空间消耗。
      * <p>
-     * 2023年07月24日17:32:04
+     * 然后，我们考虑不存储这个中序遍历序列。 如果我们在递归进行中序遍历的过程中，访问当了某个点的时候直接使用上面的update 函数，就可以省去中序遍历序列的空间，代码如下。
      */
     class Solution {
 
-        int count = 0, maxFreq = 0;
-        TreeNode pre = null;
-        List<Integer> list = new ArrayList<>();
+        List<Integer> answer = new ArrayList<Integer>();
+        int base, count, maxCount;
 
+        /**
+         * 执行耗时:1 ms,击败了71.58% 的Java用户 内存消耗:43.5 MB,击败了97.87% 的Java用户
+         * 官网答案，清晰易懂！
+         * 2023年07月30日11:13:41
+         *
+         * @param root
+         * @return
+         */
         public int[] findMode(TreeNode root) {
-            inOrder(root);
-            int[] res = new int[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                res[i] = list.get(i);
+            dfs(root);
+            int[] result = new int[answer.size()];
+            for (int i = 0; i < answer.size(); i++) {
+                result[i] = answer.get(i);
             }
-            return res;
+            return result;
         }
 
-        private void inOrder(TreeNode root) {
+        private void dfs(TreeNode root) {
             if (root == null) return;
-            inOrder(root.left);
+            dfs(root.left);
+            update(root.val);
+            dfs(root.right);
+        }
 
-            if (pre == null || pre.val == root.val) {
+        private void update(int val) {
+            if (val == base) {
                 count++;
             } else {
                 count = 1;
+                base = val;
             }
-            pre = root;
-
-            if (count == maxFreq) {
-                list.add(root.val);
-            } else if (count > maxFreq) {
-                list.clear();
-                maxFreq = count;
-                list.add(root.val);
+            if (count == maxCount) {
+                answer.add(val);
             }
-
-            inOrder(root.right);
-
+            if (count > maxCount) {
+                maxCount = count;
+                answer.clear();
+                answer.add(val);
+            }
         }
+
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
