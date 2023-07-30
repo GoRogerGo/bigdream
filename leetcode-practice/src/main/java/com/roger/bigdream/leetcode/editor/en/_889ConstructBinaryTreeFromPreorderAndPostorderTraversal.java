@@ -36,6 +36,7 @@ package com.roger.bigdream.leetcode.editor.en;
 // Related Topics Array Hash Table Divide and Conquer Tree Binary Tree 
 // 👍 2566 👎 102
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,27 +79,23 @@ public class _889ConstructBinaryTreeFromPreorderAndPostorderTraversal {
          * @return
          */
         public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
-            Map<Integer, Integer> map = new HashMap<>();
-            for (int i = 0; i < postorder.length; i++) {
-                map.put(postorder[i], i);
-            }
-            return helper(preorder, postorder, map, 0, postorder.length - 1);
-        }
-
-        private TreeNode helper(int[] preorder, int[] postorder, Map<Integer, Integer> map, int start, int end) {
-            if (start > end) {
-                return null;
-            }
-            TreeNode root = new TreeNode(preorder[postpreindex++]);
-
-            if (start == end) {
-                return root;
-            }
-
-            int index = map.get(preorder[postpreindex]);
-
-            root.left = helper(preorder, postorder, map, start, index);
-            root.right = helper(preorder, postorder, map, index + 1, end - 1);
+            int N = preorder.length;
+            if (N == 0) return null;
+            TreeNode root = new TreeNode(preorder[0]);
+            if (N == 1) return root;
+            // 我们令左分支有L个节点。
+            // 我们知道左分支的头节点为pre[1]，但它也出现在左分支的后序表示的最后。所以pre[1]=post[L-1]（因为结点的值具有唯一性），因此L=post.indexOf(pre[1])+1。
+            int L = 0;
+            for (int i = 0; i < N; ++i)
+                if (postorder[i] == preorder[1])
+                    L = i + 1;
+            //前序遍历：(根结点) (前序遍历左分支) (前序遍历右分支)
+            //后续遍历：(后序遍历左分支) (后序遍历右分支) (根结点)
+            // 左分支由pre[1:L+1]和post[0:L]重新分支，而右分支将由pre[L+1:N]和post[L:N-1]重新分支。
+            root.left = constructFromPrePost(Arrays.copyOfRange(preorder, 1, L + 1),
+                    Arrays.copyOfRange(postorder, 0, L));
+            root.right = constructFromPrePost(Arrays.copyOfRange(preorder, L + 1, N),
+                    Arrays.copyOfRange(postorder, L, N - 1));
             return root;
         }
     }

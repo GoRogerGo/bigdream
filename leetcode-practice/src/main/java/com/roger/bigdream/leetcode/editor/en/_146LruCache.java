@@ -149,24 +149,22 @@ public class _146LruCache {
             DLinkedNode node = cache.get(key);
 
             if (node == null) {
-
+                // 如果 key 不存在，创建一个新的节点
                 DLinkedNode newNode = new DLinkedNode();
                 newNode.key = key;
                 newNode.value = value;
 
-                this.cache.put(key, newNode);
-                this.addNode(newNode);
-
+                this.cache.put(key, newNode);// 添加进哈希表
+                this.addNode(newNode);// 添加至双向链表的头部
                 ++count;
 
                 if (count > capacity) {
-                    // pop the tail
-                    DLinkedNode tail = this.popTail();
-                    this.cache.remove(tail.key);
+                    DLinkedNode tail = this.popTail();// 如果超出容量，删除双向链表的尾部节点
+                    this.cache.remove(tail.key);// 删除哈希表中对应的项
                     --count;
                 }
             } else {
-                // update the value.
+                // 如果 key 存在，先通过哈希表定位，再修改 value，并移到头部
                 node.value = value;
                 this.moveToHead(node);
             }
