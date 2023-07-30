@@ -62,6 +62,38 @@ public class _986IntervalListIntersections {
         private int[][] defaultRes = new int[][]{};
 
         /**
+         * 2023年07月30日15:33:33
+         * 解答成功: 执行耗时:3 ms,击败了97.18% 的Java用户 内存消耗:44.5 MB,击败了86.00% 的Java用户
+         * 官网答案
+         *
+         * @param firstList
+         * @param secondList
+         * @return
+         */
+        public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+            List<int[]> ans = new ArrayList();
+            int i = 0, j = 0;
+
+            while (i < firstList.length && j < secondList.length) {
+                // Let's check if A[i] intersects B[j].
+                // lo - the startpoint of the intersection
+                // hi - the endpoint of the intersection
+                int lo = Math.max(firstList[i][0], secondList[j][0]);
+                int hi = Math.min(firstList[i][1], secondList[j][1]);
+                if (lo <= hi)
+                    ans.add(new int[]{lo, hi});
+
+                // Remove the interval with the smallest endpoint
+                if (firstList[i][1] < secondList[j][1])
+                    i++;
+                else
+                    j++;
+            }
+
+            return ans.toArray(new int[ans.size()][]);
+        }
+
+        /**
          * 解答成功: 执行耗时:2 ms,击败了99.17% 的Java用户 内存消耗:43.3 MB,击败了43.21% 的Java用户
          * 2023年03月24日01:12:06
          * 别人的做法，时间太晚了，后面再研读吧
@@ -70,7 +102,7 @@ public class _986IntervalListIntersections {
          * @param secondList
          * @return
          */
-        public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+        public int[][] intervalIntersection_others(int[][] firstList, int[][] secondList) {
             List<int[]> result = new LinkedList<>();
             getInterval(firstList, secondList, 0, 0, result);
             return result.toArray(new int[result.size()][]);

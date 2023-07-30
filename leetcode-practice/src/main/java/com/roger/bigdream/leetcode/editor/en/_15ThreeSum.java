@@ -73,7 +73,7 @@ public class _15ThreeSum {
             if (null == nums || nums.length < 3) return res;
             Arrays.sort(nums);
             for (int i = 0; i < nums.length; i++) {
-                if (nums[i] > 0) break;
+                if (nums[i] > 0) break; //因为已经排序好，所以后面不可能有三个数加和等于0，直接返回结果。
                 if (i > 0 && nums[i] == nums[i - 1]) continue;
                 int l = i + 1;
                 int r = nums.length - 1;

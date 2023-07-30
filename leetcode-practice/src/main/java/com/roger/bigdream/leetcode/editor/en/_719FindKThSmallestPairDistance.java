@@ -68,6 +68,7 @@ public class _719FindKThSmallestPairDistance {
         /**
          * 完全抄的，不懂第二个while循环的含义
          * 2023年03月17日15:00:38
+         * 解答成功: 执行耗时:8 ms,击败了31.69% 的Java用户 内存消耗:43.6 MB,击败了86.01% 的Java用户
          *
          * @param nums
          * @param k
@@ -75,47 +76,37 @@ public class _719FindKThSmallestPairDistance {
          */
         public int smallestDistancePair(int[] nums, int k) {
             Arrays.sort(nums);
-            int minDist = 0; // minimum distance between 2 numbers is 0 if they are the same
-            int maxDist = nums[nums.length - 1] - nums[0]; // max distance in sorted array is leftmost - rightmost element
-
-            // now we have our upper and lower bounds which represent all possible distances between pairs in the input array
-            while (minDist <= maxDist) { // time to implement our binary search
-
-                int midDist = minDist + (maxDist - minDist) / 2;
-                // (minDist + maxDist)/2 also works but can cause overflow errors in some languages
-
-                // since we want the k-th smallest distance pair we now need to count the number of pairs with a distance
-                // greater than midDist so that we can decide how to modify our search space
-
-                int left = 0;
-                int right = 0;
-                int count = 0;
-
-                while (right < nums.length) {
-                    if (nums[right] - nums[left] > midDist) {
-                        // if this condition is met then the current number and all numbers to its right will be greater
-                        // than midDist fom nums[left] because the array is sorted so we can just increment left
-                        left++;
-                    } else {
-                        count += right - left; // adds the number of pairs between right and left
-                        // for example: distance of 0 = 1 pair, distance of 2 = 2 pairs
-                        // distance of 3 = 1 + 2 = 3 pairs
-                        // distance of 4 = 1 + 2 + 3 = 6 pairs and so on
-                        right++;
-                    }
-                }
-
-                if (count >= k) {
-                    // we found too many pairs which means the k-th smallest distance pair must have a distance that is
-                    // less than our guess so we remove the lower half of our search space
-                    maxDist = midDist - 1;
+            int n = nums.length, left = 0, right = nums[n - 1] - nums[0];
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                int cnt = calcDistance(nums, n, mid);
+                if (cnt >= k) {
+                    right = mid - 1;
                 } else {
-                    // we found too few pairs which means the k-th smallest distance pair must have a distance that is
-                    // greater than our guess so we remove the lower half of our search space
-                    minDist = midDist + 1;
+                    left = mid + 1;
                 }
             }
-            return minDist;
+            return left;
+        }
+
+        /**
+         * 给定距离mid，计算所有距离小于等于mid的数对数目cnt可以使用双指针：
+         * 初始左端点i=0，我们从小到大枚举所有数对的右端点j，移动左端点直到nums[j]−nums[i]≤mid，那么右端点为j且距离小于等于mid的数对数目为j−i，计算这些数目之和。
+         *
+         * @param nums
+         * @param n
+         * @param mid
+         * @return
+         */
+        private int calcDistance(int[] nums, int n, int mid) {
+            int cnt = 0;
+            for (int i = 0, j = 0; j < n; j++) {
+                while (nums[j] - nums[i] > mid) {
+                    i++;
+                }
+                cnt += j - i;
+            }
+            return cnt;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

@@ -44,26 +44,31 @@ public class _42TrappingRainWater {
         /**
          * 解答成功: 执行耗时:1 ms,击败了98.68% 的Java用户 内存消耗:43.1 MB,击败了53.82% 的Java用户
          * 2023年03月21日17:52:16
-         * 花花的答案
+         * <p>
+         * 注意到下标i处能接的雨水量由leftMax[i]和rightMax[i]中的最小值决定。由于数组leftMaxleftMax是从左往右计算，数组rightMaxrightMax是从右往左计算，因此可以使用双指针和两个变量代替两个数组。
+         * 维护两个指针left和right，以及两个变量leftMax和rightMax，初始时left=0,right=n−1,leftMax=0,rightMax=0。指针left只会向右移动，指针right只会向左移动，在移动指针的过程中维护两个变量leftMax和rightMax的值。
+         * 当两个指针没有相遇时，进行如下操作：
+         * 1.使用height[left]和height[right]的值更新leftMax和rightMax的值；
+         * 2.如果height[left]<height[right]，则必有leftMax<rightMax，下标left处能接的雨水量等于leftMax−height[left]，将下标left处能接的雨水量加到能接的雨水总量，然后将left加1（即向右移动一位）；
+         * 3.如果height[left]≥height[right]，则必有leftMax≥rightMax，下标right处能接的雨水量等于rightMax−height[right]，将下标right处能接的雨水量加到能接的雨水总量，然后将right减1（即向左移动一位）。
+         * 当两个指针相遇时，即可得到能接的雨水总量。
          *
          * @param height
          * @return
          */
         public int trap(int[] height) {
-            int n = height.length;
-            if (n == 0) return 0;
-            int l = 0;
-            int r = n - 1;
-            int max_l = height[l];
-            int max_r = height[r];
             int ans = 0;
-            while (l < r) {
-                if (max_l < max_r) {
-                    ans += max_l - height[l];
-                    max_l = Math.max(max_l, height[++l]);
+            int left = 0, right = height.length - 1;
+            int leftMax = 0, rightMax = 0;
+            while (left < right) {
+                leftMax = Math.max(leftMax, height[left]);
+                rightMax = Math.max(rightMax, height[right]);
+                if (height[left] < height[right]) {
+                    ans += leftMax - height[left];
+                    ++left;
                 } else {
-                    ans += max_r - height[r];
-                    max_r = Math.max(max_r, height[--r]);
+                    ans += rightMax - height[right];
+                    --right;
                 }
             }
             return ans;

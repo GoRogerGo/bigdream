@@ -141,7 +141,7 @@ public class _1206DesignSkiplist {
                 }
                 if (node.next != null && node.next.val == num) {
                     flag = true;
-                    node.next = node.next.next;
+                    node.next = node.next.next; //实际的删除代码
                 }
                 node = node.down;
             }

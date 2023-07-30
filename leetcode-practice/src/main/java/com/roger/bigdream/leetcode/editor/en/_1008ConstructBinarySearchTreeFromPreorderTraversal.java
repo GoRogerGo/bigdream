@@ -84,7 +84,7 @@ public class _1008ConstructBinarySearchTreeFromPreorderTraversal {
         private TreeNode bstFromPreorder0(int[] preorder, int l, int r) {
             if (l > r) return null;
             int val = preorder[l];
-            int index;//global index in order to find  wheere the actual break happened
+            int index;//global index in order to find  where the actual break happened
             for (index = l; index <= r; index++) {
                 if (preorder[index] > preorder[l])//finding the starting index of right subtree
                     break;
