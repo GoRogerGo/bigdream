@@ -50,16 +50,16 @@ public class _5LongestPalindromicSubstring {
             int len = 0;
             int start = 0;
             for (int i = 0; i < s.length(); i++) {
-                int cur = Math.max(getLength(s, i, i), getLength(s, i, i + 1));
+                int cur = Math.max(expandAroundCenter(s, i, i), expandAroundCenter(s, i, i + 1));
                 if (cur > len) {
                     len = cur;
-                    start = i - (cur - 1) / 2;
+                    start = i - (cur - 1) / 2; //巨大的跳跃
                 }
             }
             return s.substring(start, start + len);
         }
 
-        private int getLength(String s, int l, int r) {
+        private int expandAroundCenter(String s, int l, int r) {
             while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) {
                 l--;
                 r++;

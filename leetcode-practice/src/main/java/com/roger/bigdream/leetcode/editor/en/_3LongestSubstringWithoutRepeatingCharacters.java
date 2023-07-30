@@ -39,7 +39,7 @@ package com.roger.bigdream.leetcode.editor.en;
 // Related Topics Hash Table String Sliding Window 
 // 👍 32958 👎 1439
 
-import java.util.Arrays;
+import java.util.*;
 
 public class _3LongestSubstringWithoutRepeatingCharacters {
 
@@ -50,6 +50,37 @@ public class _3LongestSubstringWithoutRepeatingCharacters {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+
+        /**
+         * 我们就可以使用「滑动窗口」来解决这个问题了：
+         * 我们使用两个指针表示字符串中的某个子串（或窗口）的左右边界，其中左指针代表着上文中「枚举子串的起始位置」，而右指针即为上文中的rk
+         * 在每一步的操作中，我们会将左指针向右移动一格，表示 我们开始枚举下一个字符作为起始位置，然后我们可以不断地向右移动右指针，但需要保证这两个指针对应的子串中没有重复的字符。在移动结束后，这个子串就对应着 以左指针开始的，不包含重复字符的最长子串。我们记录下这个子串的长度；
+         * 在枚举结束后，我们找到的最长的子串的长度即为答案。
+         * <p>
+         * 官网答案
+         * 2023年07月30日16:26:58
+         * 解答成功: 执行耗时:7 ms,击败了73.46% 的Java用户 内存消耗:44.2 MB,击败了22.41% 的Java用户
+         *
+         * @param s
+         * @return
+         */
+        public int lengthOfLongestSubstring(String s) {
+            Set<Character> charSet = new HashSet<>();
+            int n = s.length();
+            int rk = -1, ans = 0;
+            for (int i = 0; i < n; i++) {
+                if (i > 0) {
+                    charSet.remove(s.charAt(i - 1)); //这里是charAt[i-1]，不是charAt[i]
+                }
+                while (rk + 1 < n && !charSet.contains(s.charAt(rk + 1))) { //这里是rk + 1 < n，不是rk < n；是charAt[rk + 1]，不是charAt[rk]
+                    charSet.add(s.charAt(rk + 1));
+                    ++rk;
+                }
+                ans = Math.max(ans, rk - i + 1);
+            }
+            return ans;
+        }
+
         /**
          * 解答成功: 执行耗时:3 ms,击败了95.93% 的Java用户 内存消耗:43 MB,击败了29.85% 的Java用户
          * 2023年04月07日17:24:13
@@ -58,7 +89,7 @@ public class _3LongestSubstringWithoutRepeatingCharacters {
          * @param s
          * @return
          */
-        public int lengthOfLongestSubstring(String s) {
+        public int lengthOfLongestSubstring_huahua(String s) {
             int[] last = new int[128];
             Arrays.fill(last, -1);
             int ans = 0, start = 0;
