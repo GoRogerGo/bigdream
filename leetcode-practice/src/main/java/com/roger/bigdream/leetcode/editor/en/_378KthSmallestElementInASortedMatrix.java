@@ -88,9 +88,9 @@ public class _378KthSmallestElementInASortedMatrix {
 
             int i = rowCount - 1;
             int j = 0;
-            while (i >= 0 && j < columnCount) {
+            while (i >= 0 && j < columnCount) { //注意条件
                 if (matrix[i][j] <= target) {
-                    result += (i + 1);
+                    result += (i + 1); //从左下角开始算
                     j++;
                 } else {
                     i--;

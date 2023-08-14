@@ -70,15 +70,14 @@ public class _240SearchA2dMatrixIi {
             int rowCount = matrix.length;
             int columnCount = matrix[0].length;
 
-            int i = rowCount - 1;
-            int j = 0;
-            while (i >= 0 && j < columnCount) {
-                System.out.println(matrix[i][j]);
-                if (matrix[i][j] == target) return true;
-                if (matrix[i][j] < target) {
-                    j++;
+            int x = 0;
+            int y = rowCount - 1;
+            while (y >= 0 && x < columnCount) {
+                if (matrix[x][y] == target) return true;
+                if (matrix[x][y] < target) {
+                    x++; // 利用到了"每一列也是升序"的条件，这里可以简单上移一行
                 } else {
-                    i--; // 利用到了"每一列也是升序"的条件，这里可以简单上移一行
+                    y--;
                 }
             }
             return false;
