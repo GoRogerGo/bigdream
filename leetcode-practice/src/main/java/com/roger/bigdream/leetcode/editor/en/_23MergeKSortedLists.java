@@ -86,7 +86,6 @@ public class _23MergeKSortedLists {
         private ListNode mergeKLists(ListNode[] lists, int l, int r) {
             if (l > r) return null;
             if (l == r) return lists[l];
-//            if (l + 1 == r) return mergeTwoLists(lists[l], lists[r]);
             int mid = l + (r - l) / 2;
             ListNode left = mergeKLists(lists, l, mid);
             ListNode right = mergeKLists(lists, mid + 1, r);

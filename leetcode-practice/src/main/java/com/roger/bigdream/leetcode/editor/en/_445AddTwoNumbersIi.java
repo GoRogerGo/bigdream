@@ -51,15 +51,15 @@ public class _445AddTwoNumbersIi {
         Solution solution = new _445AddTwoNumbersIi().new Solution();
         ListNode listNode1 = new ListNode(2, new ListNode(4, new ListNode(3)));
         ListNode listNode2 = new ListNode(5, new ListNode(6, new ListNode(4)));
-        ListNode result = solution.addTwoNumbers(listNode1, listNode2);
+//        ListNode result = solution.addTwoNumbers(listNode1, listNode2);
 
         listNode1 = new ListNode(0);
         listNode2 = new ListNode(0);
-        result = solution.addTwoNumbers(listNode1, listNode2);
+//        result = solution.addTwoNumbers(listNode1, listNode2);
 
         listNode1 = new ListNode(7, new ListNode(2, new ListNode(4, new ListNode(3))));
         listNode2 = new ListNode(5, new ListNode(6, new ListNode(4)));
-        result = solution.addTwoNumbers(listNode1, listNode2);
+        ListNode result = solution.addTwoNumbers(listNode1, listNode2);
     }
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -75,6 +75,44 @@ public class _445AddTwoNumbersIi {
      * }
      */
     class Solution {
+
+        /**
+         * 解答成功: 执行耗时:2 ms,击败了97.54% 的Java用户 内存消耗:43 MB,击败了97.71% 的Java用
+         * <p>
+         * 2023年08月16日10:02:33
+         *
+         * @param l1
+         * @param l2
+         * @return
+         */
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            ListNode ll1 = revertNode(l1);
+            ListNode ll2 = revertNode(l2);
+            ListNode tail = null;
+            int carry = 0;
+            while (ll1 != null || ll2 != null || carry > 0) {
+                int sum = (ll1 != null ? ll1.val : 0) + (ll2 != null ? ll2.val : 0) + carry;
+                ListNode newNode = new ListNode(sum % 10);
+                carry = sum > 9 ? 1 : 0;
+                newNode.next = tail;
+                tail = newNode;
+                ll1 = ll1 == null ? null : ll1.next;
+                ll2 = ll2 == null ? null : ll2.next;
+            }
+            return tail;
+        }
+
+        private ListNode revertNode(ListNode node) {
+            ListNode prev = null, curr = node;
+            while (curr != null) {
+                ListNode next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+            return prev;
+        }
+
         /**
          * 第二次编写 2023年03月03日14:43:10
          * 解答成功: 执行耗时:7 ms,击败了14.24% 的Java用户 内存消耗:42.9 MB,击败了19.77% 的Java用户
@@ -83,7 +121,7 @@ public class _445AddTwoNumbersIi {
          * @param l2
          * @return
          */
-        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        public ListNode addTwoNumbers_useStack(ListNode l1, ListNode l2) {
             if (l1 == null) return l2;
             if (l2 == null) return l1;
             Stack stack1 = parseFromListNode(l1);
