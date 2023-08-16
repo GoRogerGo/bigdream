@@ -87,6 +87,7 @@ public class _888FairCandySwap {
                 if (setAlice.contains(aim)) {
                     result[0] = aim;
                     result[1] = bobSize;
+                    break;
                 }
             }
             return result;
